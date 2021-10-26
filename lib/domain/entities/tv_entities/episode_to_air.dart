@@ -1,16 +1,16 @@
 import 'package:equatable/equatable.dart';
 
 class TEpisodeToAir extends Equatable {
-  final DateTime airDate;
-  final int episodeNumber;
-  final int id;
-  final String name;
-  final String overview;
-  final String productionCode;
-  final int seasonNumber;
+  final String? airDate;
+  final int? episodeNumber;
+  final int? id;
+  final String? name;
+  final String? overview;
+  final String? productionCode;
+  final int? seasonNumber;
   final String? stillPath;
-  final int voteAverage;
-  final int voteCount;
+  final double? voteAverage;
+  final int? voteCount;
 
   TEpisodeToAir({
     required this.airDate,

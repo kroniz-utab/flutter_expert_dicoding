@@ -46,16 +46,16 @@ class TvDetailResponse extends Equatable {
   final String? backdropPath;
   final List<CreatedByModel> createdBy;
   final List<int> episodeRunTime;
-  final DateTime firstAirDate;
+  final String? firstAirDate;
   final List<GenreModel> genres;
   final String homepage;
   final int id;
   final bool inProduction;
   final List<String> languages;
-  final DateTime lastAirDate;
+  final String? lastAirDate;
   final TEpisodeToAirModel lastEpisodeToAir;
   final String name;
-  final TEpisodeToAirModel nextEpisodeToAir;
+  final TEpisodeToAirModel? nextEpisodeToAir;
   final List<NetworkModel> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -65,10 +65,10 @@ class TvDetailResponse extends Equatable {
   final String overview;
   final double popularity;
   final String posterPath;
-  final List<NetworkModel> productionCompanies;
-  final List<ProductionCountryModel> productionCountries;
-  final List<SeasonModel> seasons;
-  final List<SpokenLanguageModel> spokenLanguages;
+  final List<NetworkModel>? productionCompanies;
+  final List<ProductionCountryModel>? productionCountries;
+  final List<SeasonModel>? seasons;
+  final List<SpokenLanguageModel>? spokenLanguages;
   final String status;
   final String tagline;
   final String type;
@@ -81,21 +81,24 @@ class TvDetailResponse extends Equatable {
         createdBy: List<CreatedByModel>.from(
             json["created_by"].map((x) => CreatedByModel.fromJson(x))),
         episodeRunTime: List<int>.from(json["episode_run_time"].map((x) => x)),
-        firstAirDate: DateTime.parse(json["first_air_date"]),
+        firstAirDate: json["first_air_date"],
         genres: List<GenreModel>.from(
             json["genres"].map((x) => GenreModel.fromJson(x))),
         homepage: json["homepage"],
         id: json["id"],
         inProduction: json["in_production"],
         languages: List<String>.from(json["languages"].map((x) => x)),
-        lastAirDate: DateTime.parse(json["last_air_date"]),
+        lastAirDate: json["last_air_date"],
         lastEpisodeToAir:
             TEpisodeToAirModel.fromJson(json["last_episode_to_air"]),
         name: json["name"],
-        nextEpisodeToAir:
-            TEpisodeToAirModel.fromJson(json["next_episode_to_air"]),
-        networks: List<NetworkModel>.from(
-            json["networks"].map((x) => NetworkModel.fromJson(x))),
+        nextEpisodeToAir: json["next_episode_to_air"] != null
+            ? TEpisodeToAirModel.fromJson(json["next_episode_to_air"])
+            : json["next_episode_to_air"],
+        networks: json["networks"] != null
+            ? List<NetworkModel>.from(
+                json["networks"].map((x) => NetworkModel.fromJson(x)))
+            : json["networks"],
         numberOfEpisodes: json["number_of_episodes"],
         numberOfSeasons: json["number_of_seasons"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),
@@ -106,13 +109,18 @@ class TvDetailResponse extends Equatable {
         posterPath: json["poster_path"],
         productionCompanies: List<NetworkModel>.from(
             json["production_companies"].map((x) => NetworkModel.fromJson(x))),
-        productionCountries: List<ProductionCountryModel>.from(
-            json["production_countries"]
-                .map((x) => ProductionCountryModel.fromJson(x))),
-        seasons: List<SeasonModel>.from(
-            json["seasons"].map((x) => SeasonModel.fromJson(x))),
-        spokenLanguages: List<SpokenLanguageModel>.from(json["spoken_languages"]
-            .map((x) => SpokenLanguageModel.fromJson(x))),
+        productionCountries: json["production_countries"] != null
+            ? List<ProductionCountryModel>.from(json["production_countries"]
+                .map((x) => ProductionCountryModel.fromJson(x)))
+            : json["production_countries"],
+        seasons: json["seasons"] != null
+            ? List<SeasonModel>.from(
+                json["seasons"].map((x) => SeasonModel.fromJson(x)))
+            : json["seasons"],
+        spokenLanguages: json["spoken_languages"] != null
+            ? List<SpokenLanguageModel>.from(json["spoken_languages"]
+                .map((x) => SpokenLanguageModel.fromJson(x)))
+            : json["spoken_languages"],
         status: json["status"],
         tagline: json["tagline"],
         type: json["type"],
@@ -124,18 +132,16 @@ class TvDetailResponse extends Equatable {
         "backdrop_path": backdropPath,
         "created_by": List<dynamic>.from(createdBy.map((x) => x.toJson())),
         "episode_run_time": List<dynamic>.from(episodeRunTime.map((x) => x)),
-        "first_air_date":
-            "${firstAirDate.year.toString().padLeft(4, '0')}-${firstAirDate.month.toString().padLeft(2, '0')}-${firstAirDate.day.toString().padLeft(2, '0')}",
+        "first_air_date": firstAirDate,
         "genres": List<dynamic>.from(genres.map((x) => x.toJson())),
         "homepage": homepage,
         "id": id,
         "in_production": inProduction,
         "languages": List<dynamic>.from(languages.map((x) => x)),
-        "last_air_date":
-            "${lastAirDate.year.toString().padLeft(4, '0')}-${lastAirDate.month.toString().padLeft(2, '0')}-${lastAirDate.day.toString().padLeft(2, '0')}",
+        "last_air_date": lastAirDate,
         "last_episode_to_air": lastEpisodeToAir.toJson(),
         "name": name,
-        "next_episode_to_air": nextEpisodeToAir.toJson(),
+        "next_episode_to_air": nextEpisodeToAir!.toJson(),
         "networks": List<dynamic>.from(networks.map((x) => x.toJson())),
         "number_of_episodes": numberOfEpisodes,
         "number_of_seasons": numberOfSeasons,
@@ -146,12 +152,12 @@ class TvDetailResponse extends Equatable {
         "popularity": popularity,
         "poster_path": posterPath,
         "production_companies":
-            List<dynamic>.from(productionCompanies.map((x) => x.toJson())),
+            List<dynamic>.from(productionCompanies!.map((x) => x.toJson())),
         "production_countries":
-            List<dynamic>.from(productionCountries.map((x) => x.toJson())),
-        "seasons": List<dynamic>.from(seasons.map((x) => x.toJson())),
+            List<dynamic>.from(productionCountries!.map((x) => x.toJson())),
+        "seasons": List<dynamic>.from(seasons!.map((x) => x.toJson())),
         "spoken_languages":
-            List<dynamic>.from(spokenLanguages.map((x) => x.toJson())),
+            List<dynamic>.from(spokenLanguages!.map((x) => x.toJson())),
         "status": status,
         "tagline": tagline,
         "type": type,
@@ -173,7 +179,9 @@ class TvDetailResponse extends Equatable {
       lastAirDate: this.lastAirDate,
       lastEpisodeToAir: this.lastEpisodeToAir.toEntity(),
       name: this.name,
-      nextEpisodeToAir: this.nextEpisodeToAir.toEntity(),
+      nextEpisodeToAir: this.nextEpisodeToAir != null
+          ? this.nextEpisodeToAir!.toEntity()
+          : null,
       networks: this.networks.map((network) => network.toEntity()).toList(),
       numberOfEpisodes: this.numberOfEpisodes,
       numberOfSeasons: this.numberOfSeasons,
@@ -184,16 +192,16 @@ class TvDetailResponse extends Equatable {
       popularity: this.popularity,
       posterPath: this.posterPath,
       productionCompanies: this
-          .productionCompanies
+          .productionCompanies!
           .map((productionCompany) => productionCompany.toEntity())
           .toList(),
       productionCountries: this
-          .productionCountries
+          .productionCountries!
           .map((productionCountry) => productionCountry.toEntity())
           .toList(),
-      seasons: this.seasons.map((season) => season.toEntity()).toList(),
+      seasons: this.seasons!.map((season) => season.toEntity()).toList(),
       spokenLanguages:
-          this.spokenLanguages.map((language) => language.toEntity()).toList(),
+          this.spokenLanguages!.map((language) => language.toEntity()).toList(),
       status: this.status,
       tagline: this.tagline,
       type: this.type,

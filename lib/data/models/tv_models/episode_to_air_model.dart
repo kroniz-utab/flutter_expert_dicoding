@@ -15,7 +15,7 @@ class TEpisodeToAirModel extends Equatable {
     required this.voteCount,
   });
 
-  final DateTime airDate;
+  final String? airDate;
   final int episodeNumber;
   final int id;
   final String name;
@@ -23,12 +23,12 @@ class TEpisodeToAirModel extends Equatable {
   final String productionCode;
   final int seasonNumber;
   final String? stillPath;
-  final int voteAverage;
+  final double? voteAverage;
   final int voteCount;
 
   factory TEpisodeToAirModel.fromJson(Map<String, dynamic> json) =>
       TEpisodeToAirModel(
-        airDate: DateTime.parse(json["air_date"]),
+        airDate: json["air_date"],
         episodeNumber: json["episode_number"],
         id: json["id"],
         name: json["name"],
@@ -36,13 +36,12 @@ class TEpisodeToAirModel extends Equatable {
         productionCode: json["production_code"],
         seasonNumber: json["season_number"],
         stillPath: json["still_path"] == null ? null : json["still_path"],
-        voteAverage: json["vote_average"],
+        voteAverage: json["vote_average"].toDouble(),
         voteCount: json["vote_count"],
       );
 
   Map<String, dynamic> toJson() => {
-        "air_date":
-            "${airDate.year.toString().padLeft(4, '0')}-${airDate.month.toString().padLeft(2, '0')}-${airDate.day.toString().padLeft(2, '0')}",
+        "air_date": airDate,
         "episode_number": episodeNumber,
         "id": id,
         "name": name,
@@ -50,7 +49,7 @@ class TEpisodeToAirModel extends Equatable {
         "production_code": productionCode,
         "season_number": seasonNumber,
         "still_path": stillPath == null ? null : stillPath,
-        "vote_average": voteAverage,
+        "vote_average": voteAverage!.toDouble(),
         "vote_count": voteCount,
       };
 
@@ -64,7 +63,7 @@ class TEpisodeToAirModel extends Equatable {
       productionCode: this.productionCode,
       seasonNumber: this.seasonNumber,
       stillPath: this.stillPath,
-      voteAverage: this.voteAverage,
+      voteAverage: this.voteAverage!.toDouble(),
       voteCount: this.voteCount,
     );
   }

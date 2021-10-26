@@ -1,19 +1,19 @@
 import 'package:equatable/equatable.dart';
 
 class TV extends Equatable {
-  String backdropPath;
-  String firstAirDate;
-  List<int> genreIds;
+  String? backdropPath;
+  String? firstAirDate;
+  List<int>? genreIds;
   int id;
-  String name;
-  List<String> originCountry;
-  String originalLanguage;
-  String originalName;
-  String overview;
-  double popularity;
+  String? name;
+  List<String>? originCountry;
+  String? originalLanguage;
+  String? originalName;
+  String? overview;
+  double? popularity;
   String? posterPath;
-  double voteAverage;
-  int voteCount;
+  double? voteAverage;
+  int? voteCount;
 
   TV({
     required this.backdropPath,
@@ -29,6 +29,13 @@ class TV extends Equatable {
     required this.posterPath,
     required this.voteAverage,
     required this.voteCount,
+  });
+
+  TV.watchlist({
+    required this.id,
+    required this.overview,
+    required this.posterPath,
+    required this.name,
   });
 
   @override

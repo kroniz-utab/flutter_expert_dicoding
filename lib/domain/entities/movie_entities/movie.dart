@@ -22,6 +22,7 @@ class Movie extends Equatable {
     required this.overview,
     required this.posterPath,
     required this.title,
+    this.type,
   });
 
   bool? adult;
@@ -37,6 +38,7 @@ class Movie extends Equatable {
   bool? video;
   double? voteAverage;
   int? voteCount;
+  int? type;
 
   @override
   List<Object?> get props => [

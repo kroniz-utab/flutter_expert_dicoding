@@ -3,8 +3,8 @@ import 'package:ditonton/data/datasources/db/database_helper.dart';
 import 'package:ditonton/data/models/movie_models/movie_table.dart';
 
 abstract class MovieLocalDataSource {
-  Future<String> insertWatchlist(MovieTable movie);
-  Future<String> removeWatchlist(MovieTable movie);
+  Future<String> insertMovieWatchlist(MovieTable movie);
+  Future<String> removeMovieWatchlist(MovieTable movie);
   Future<MovieTable?> getMovieById(int id);
   Future<List<MovieTable>> getWatchlistMovies();
   Future<void> cacheNowPlayingMovies(List<MovieTable> movies);
@@ -17,9 +17,9 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   MovieLocalDataSourceImpl({required this.databaseHelper});
 
   @override
-  Future<String> insertWatchlist(MovieTable movie) async {
+  Future<String> insertMovieWatchlist(MovieTable movie) async {
     try {
-      await databaseHelper.insertWatchlist(movie);
+      await databaseHelper.insertMovieWatchlist(movie);
       return 'Added to Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -27,9 +27,9 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
   }
 
   @override
-  Future<String> removeWatchlist(MovieTable movie) async {
+  Future<String> removeMovieWatchlist(MovieTable movie) async {
     try {
-      await databaseHelper.removeWatchlist(movie);
+      await databaseHelper.removeMovieWatchlist(movie);
       return 'Removed from Watchlist';
     } catch (e) {
       throw DatabaseException(e.toString());
@@ -54,13 +54,13 @@ class MovieLocalDataSourceImpl implements MovieLocalDataSource {
 
   @override
   Future<void> cacheNowPlayingMovies(List<MovieTable> movies) async {
-    await databaseHelper.clearCache('now playing');
-    await databaseHelper.insertCacheTransaction(movies, 'now playing');
+    await databaseHelper.clearMoviesCache('now playing');
+    await databaseHelper.insertMoviesCacheTransaction(movies, 'now playing');
   }
 
   @override
   Future<List<MovieTable>> getCachedNowPlayingMovies() async {
-    final result = await databaseHelper.getCacheMovies('now playing');
+    final result = await databaseHelper.getMoviesCacheMovies('now playing');
     if (result.length > 0) {
       return result.map((data) => MovieTable.fromMap(data)).toList();
     } else {

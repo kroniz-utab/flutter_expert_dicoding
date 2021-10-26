@@ -18,27 +18,31 @@ class TVModel extends Equatable {
     required this.voteCount,
   });
 
-  final String backdropPath;
-  final String firstAirDate;
-  final List<int> genreIds;
+  final String? backdropPath;
+  final String? firstAirDate;
+  final List<int>? genreIds;
   final int id;
-  final String name;
-  final List<String> originCountry;
-  final String originalLanguage;
-  final String originalName;
-  final String overview;
-  final double popularity;
+  final String? name;
+  final List<String>? originCountry;
+  final String? originalLanguage;
+  final String? originalName;
+  final String? overview;
+  final double? popularity;
   final String? posterPath;
-  final double voteAverage;
-  final int voteCount;
+  final double? voteAverage;
+  final int? voteCount;
 
   factory TVModel.fromJson(Map<String, dynamic> json) => TVModel(
         backdropPath: json["backdrop_path"],
         firstAirDate: json["first_air_date"],
-        genreIds: List<int>.from(json["genre_ids"].map((x) => x)),
+        genreIds: json["genre_ids"] != null
+            ? List<int>.from(json["genre_ids"].map((x) => x))
+            : json["genre_ids"],
         id: json["id"],
         name: json["name"],
-        originCountry: List<String>.from(json["origin_country"].map((x) => x)),
+        originCountry: json["origin_country"] != null
+            ? List<String>.from(json["origin_country"].map((x) => x))
+            : json["origin_country"],
         originalLanguage: json["original_language"],
         originalName: json["original_name"],
         overview: json["overview"],
@@ -51,10 +55,10 @@ class TVModel extends Equatable {
   Map<String, dynamic> toJson() => {
         "backdrop_path": backdropPath,
         "first_air_date": firstAirDate,
-        "genre_ids": List<dynamic>.from(genreIds.map((x) => x)),
+        "genre_ids": List<dynamic>.from(genreIds!.map((x) => x)),
         "id": id,
         "name": name,
-        "origin_country": List<dynamic>.from(originCountry.map((x) => x)),
+        "origin_country": List<dynamic>.from(originCountry!.map((x) => x)),
         "original_language": originalLanguage,
         "original_name": originalName,
         "overview": overview,

@@ -45,16 +45,16 @@ class TVDetail extends Equatable {
   final String? backdropPath;
   final List<CreatedBy> createdBy;
   final List<int> episodeRunTime;
-  final DateTime firstAirDate;
+  final String? firstAirDate;
   final List<Genre> genres;
   final String homepage;
   final int id;
   final bool inProduction;
   final List<String> languages;
-  final DateTime lastAirDate;
-  final TEpisodeToAir lastEpisodeToAir;
+  final String? lastAirDate;
+  final TEpisodeToAir? lastEpisodeToAir;
   final String name;
-  final TEpisodeToAir nextEpisodeToAir;
+  final TEpisodeToAir? nextEpisodeToAir;
   final List<Network> networks;
   final int numberOfEpisodes;
   final int numberOfSeasons;
@@ -64,10 +64,10 @@ class TVDetail extends Equatable {
   final String overview;
   final double popularity;
   final String posterPath;
-  final List<Network> productionCompanies;
-  final List<ProductionCountry> productionCountries;
-  final List<Season> seasons;
-  final List<SpokenLanguage> spokenLanguages;
+  final List<Network>? productionCompanies;
+  final List<ProductionCountry>? productionCountries;
+  final List<Season>? seasons;
+  final List<SpokenLanguage>? spokenLanguages;
   final String status;
   final String tagline;
   final String type;
@@ -76,7 +76,6 @@ class TVDetail extends Equatable {
 
   @override
   List<Object?> get props => [
-        backdropPath,
         createdBy,
         episodeRunTime,
         firstAirDate,
