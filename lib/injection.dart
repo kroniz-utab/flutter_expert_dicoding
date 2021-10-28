@@ -25,6 +25,7 @@ import 'package:ditonton/domain/usecases/tv_usecases/get_top_rated_tv_show.dart'
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_on_the_air.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_recommendations.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_show_detail.dart';
+import 'package:ditonton/domain/usecases/tv_usecases/get_watchlist_tv_status.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_watchlist_tvshow.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/remove_tv_watchlist.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/save_tv_watchlist.dart';
@@ -36,6 +37,7 @@ import 'package:ditonton/presentation/provider/movies_provider/popular_movies_no
 import 'package:ditonton/presentation/provider/movies_provider/top_rated_movies_notifier.dart';
 import 'package:ditonton/presentation/provider/movies_provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/popular_tv_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_provider/top_rated_tv_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_search_notifier.dart';
@@ -90,8 +92,8 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => TopRatedMoviesNotifier(
-      getTopRatedMovies: locator(),
+    () => TopRatedTVNotifier(
+      getTopRatedTVShows: locator(),
     ),
   );
   locator.registerFactory(
@@ -142,7 +144,7 @@ void init() {
   locator.registerLazySingleton(() => GetTVShowDetail(locator()));
   locator.registerLazySingleton(() => SearchTVShows(locator()));
   locator.registerLazySingleton(() => GetWatchlistTVShows(locator()));
-  locator.registerLazySingleton(() => GetWatchListStatus(locator()));
+  locator.registerLazySingleton(() => GetWatchlistTVStatus(locator()));
   locator.registerLazySingleton(() => SaveTVWatchList(locator()));
   locator.registerLazySingleton(() => RemoveTVWatchlist(locator()));
 

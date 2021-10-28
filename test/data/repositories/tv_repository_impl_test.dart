@@ -100,10 +100,10 @@ void main() {
           'should return connection failure when device is not connected to the internet',
           () async {
         // arrange
-        when(mockRemoteDataSource.getTVOnTheAir())
+        when(mockRemoteDataSource.getPopularTVShows())
             .thenThrow(SocketException('Failed to connect to the network'));
         // act
-        final result = await repository.getTVOnTheAir();
+        final result = await repository.getPopularTVShows();
         // assert
         expect(result,
             Left(ConnectionFailure('Failed to connect to the network')));
@@ -194,7 +194,7 @@ void main() {
     test('should return ServerFailure when call to data source is unsuccessful',
         () async {
       // arrange
-      when(mockRemoteDataSource.getTopRatedTVShows)
+      when(mockRemoteDataSource.getTopRatedTVShows())
           .thenThrow(ServerException());
       // act
       final result = await repository.getTopRatedTVShows();

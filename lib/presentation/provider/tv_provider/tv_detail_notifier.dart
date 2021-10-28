@@ -3,7 +3,6 @@ import 'package:flutter/foundation.dart';
 import 'package:ditonton/common/state_enum.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv_detail.dart';
-import 'package:ditonton/domain/usecases/movie_usecases/get_watchlist_status.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_similar_tv_shows.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_recommendations.dart';
 import 'package:ditonton/domain/usecases/tv_usecases/get_tv_show_detail.dart';

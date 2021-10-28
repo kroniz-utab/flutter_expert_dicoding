@@ -1,16 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 
-import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/domain/entities/movie_entities/movie.dart';
-import 'package:ditonton/presentation/pages/movie_detail_page.dart';
+import 'package:ditonton/domain/entities/tv_entities/tv.dart';
 
-class MovieCard extends StatelessWidget {
-  final Movie movie;
+class TVShowCard extends StatelessWidget {
+  final TV tv;
   final bool isWatchlist;
-  const MovieCard({
+  const TVShowCard({
     Key? key,
-    required this.movie,
+    required this.tv,
     required this.isWatchlist,
   }) : super(key: key);
 
@@ -22,8 +22,8 @@ class MovieCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            MovieDetailPage.ROUTE_NAME,
-            arguments: movie.id,
+            TVDetailPage.ROUTE_NAME,
+            arguments: tv.id,
           );
         },
         child: Stack(
@@ -43,23 +43,23 @@ class MovieCard extends StatelessWidget {
                         ? Row(
                             children: [
                               Icon(
-                                Icons.movie_outlined,
+                                Icons.tv_outlined,
                                 size: 15,
                               ),
                               SizedBox(width: 8),
-                              Text('Movies'),
+                              Text('TV Show'),
                             ],
                           )
                         : SizedBox(),
                     Text(
-                      movie.title ?? '-',
+                      tv.name ?? '-',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: kHeading6,
                     ),
                     SizedBox(height: 8),
                     Text(
-                      movie.overview ?? '-',
+                      tv.overview ?? '-',
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -74,7 +74,7 @@ class MovieCard extends StatelessWidget {
               ),
               child: ClipRRect(
                 child: CachedNetworkImage(
-                  imageUrl: '$BASE_IMAGE_URL${movie.posterPath}',
+                  imageUrl: '$BASE_IMAGE_URL${tv.posterPath}',
                   width: 80,
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),

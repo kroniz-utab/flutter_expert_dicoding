@@ -1,50 +1,49 @@
 import 'package:ditonton/common/constants.dart';
-import 'package:ditonton/presentation/pages/popular_movies_page.dart';
-import 'package:ditonton/presentation/pages/search_page.dart';
-import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
-import 'package:ditonton/presentation/provider/movies_provider/movie_list_notifier.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/provider/tv_provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/widgets/custom_drawer.dart';
-import 'package:ditonton/presentation/widgets/movie_list.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:ditonton/presentation/widgets/tv_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:provider/provider.dart';
 
-class HomeMoviePage extends StatefulWidget {
-  static const ROUTE_NAME = '/movie-page';
-  static const LOCATION = 'home';
+class HomeTVPage extends StatefulWidget {
+  static const ROUTE_NAME = '/tv-page';
+  static const LOCATION = 'tv_show';
+  HomeTVPage({Key? key}) : super(key: key);
+
   @override
-  _HomeMoviePageState createState() => _HomeMoviePageState();
+  _HomeTVPageState createState() => _HomeTVPageState();
 }
 
-class _HomeMoviePageState extends State<HomeMoviePage> {
+class _HomeTVPageState extends State<HomeTVPage> {
   @override
   void initState() {
     super.initState();
     Future.microtask(
-        () => Provider.of<MovieListNotifier>(context, listen: false)
-          ..fetchNowPlayingMovies()
-          ..fetchPopularMovies()
-          ..fetchTopRatedMovies());
+      () => Provider.of<TVListNotifier>(context, listen: false)
+        ..fetchTVOnTheAir()
+        ..fetchPopularTVShows()
+        ..fetchTopRatedTVShows(),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
     return Material(
       child: CustomDrawer(
-        location: HomeMoviePage.LOCATION,
+        location: HomeTVPage.LOCATION,
         content: Scaffold(
           appBar: AppBar(
             leading: Icon(Icons.menu),
-            title: Text('Ditonton'),
+            title: Text('TV Show'),
             actions: [
               IconButton(
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
                     SearchPage.ROUTE_NAME,
-                    arguments: true,
+                    arguments: false,
                   );
                 },
                 icon: Icon(Icons.search),
@@ -58,51 +57,56 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    'Now Playing',
+                    'On The Air',
                     style: kHeading6,
                   ),
-                  Consumer<MovieListNotifier>(builder: (context, data, child) {
-                    final state = data.nowPlayingState;
+                  Consumer<TVListNotifier>(builder: (context, data, child) {
+                    final state = data.tvOnTheAirState;
                     if (state == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state == RequestState.Loaded) {
-                      return MovieList(data.nowPlayingMovies);
+                      return TVListLayout(
+                        tv: data.tvOnTheAir,
+                        height: 200,
+                      );
                     } else {
                       return Text('Failed');
                     }
                   }),
-                  _buildSubHeading(
-                    title: 'Popular',
-                    onTap: () => Navigator.pushNamed(
-                        context, PopularMoviesPage.ROUTE_NAME),
-                  ),
-                  Consumer<MovieListNotifier>(builder: (context, data, child) {
-                    final state = data.popularMoviesState;
+                  _buildSubHeading(title: 'Popular TV Shows', onTap: () {}
+                      // Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
+                      ),
+                  Consumer<TVListNotifier>(builder: (context, data, child) {
+                    final state = data.popularTVShowsState;
                     if (state == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state == RequestState.Loaded) {
-                      return MovieList(data.popularMovies);
+                      return TVListLayout(
+                        tv: data.popularTVShows,
+                        height: 200,
+                      );
                     } else {
                       return Text('Failed');
                     }
                   }),
-                  _buildSubHeading(
-                    title: 'Top Rated',
-                    onTap: () => Navigator.pushNamed(
-                        context, TopRatedMoviesPage.ROUTE_NAME),
-                  ),
-                  Consumer<MovieListNotifier>(builder: (context, data, child) {
-                    final state = data.topRatedMoviesState;
+                  _buildSubHeading(title: 'Top Rated', onTap: () {}
+                      // Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
+                      ),
+                  Consumer<TVListNotifier>(builder: (context, data, child) {
+                    final state = data.topRatedTVShowsState;
                     if (state == RequestState.Loading) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
                     } else if (state == RequestState.Loaded) {
-                      return MovieList(data.topRatedMovies);
+                      return TVListLayout(
+                        tv: data.topRatedTVShows,
+                        height: 200,
+                      );
                     } else {
                       return Text('Failed');
                     }

@@ -324,25 +324,22 @@ final testTVMap = {
 };
 
 final testTVCache = TVTable(
-  id: 90462,
-  name: 'Chucky',
-  posterPath: '/iF8ai2QLNiHV4anwY1TuSGZXqfN.jpg',
-  overview:
-      'After a vintage Chucky doll turns up at a suburban yard sale, an idyllic American town is thrown into chaos as a series of horrifying murders begin to expose the town’s hypocrisies and secrets. Meanwhile, the arrival of enemies — and allies — from Chucky’s past threatens to expose the truth behind the killings, as well as the demon doll’s untold origins.',
+  id: 1,
+  name: 'name',
+  posterPath: '/path.jpg',
+  overview: 'overview',
 );
 
 final testTVCacheMap = {
-  'id': 90462,
-  'name': 'Chucky',
-  'posterPath': '/iF8ai2QLNiHV4anwY1TuSGZXqfN.jpg',
-  'overview':
-      'After a vintage Chucky doll turns up at a suburban yard sale, an idyllic American town is thrown into chaos as a series of horrifying murders begin to expose the town’s hypocrisies and secrets. Meanwhile, the arrival of enemies — and allies — from Chucky’s past threatens to expose the truth behind the killings, as well as the demon doll’s untold origins.',
+  'id': 1,
+  'name': 'name',
+  'posterPath': '/path.jpg',
+  'overview': 'overview',
 };
 
 final testTVFromCache = TV.watchlist(
-  id: 90462,
-  overview:
-      'After a vintage Chucky doll turns up at a suburban yard sale, an idyllic American town is thrown into chaos as a series of horrifying murders begin to expose the town’s hypocrisies and secrets. Meanwhile, the arrival of enemies — and allies — from Chucky’s past threatens to expose the truth behind the killings, as well as the demon doll’s untold origins.',
-  posterPath: '/iF8ai2QLNiHV4anwY1TuSGZXqfN.jpg',
-  name: 'Chucky',
+  id: 1,
+  overview: 'overview',
+  posterPath: '/path.jpg',
+  name: 'name',
 );

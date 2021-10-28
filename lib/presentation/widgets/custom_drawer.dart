@@ -1,12 +1,18 @@
-import 'package:ditonton/presentation/pages/about_page.dart';
-import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+import 'package:ditonton/presentation/pages/main_page.dart';
 import 'package:flutter/material.dart';
 
+import 'package:ditonton/presentation/pages/about_page.dart';
+import 'package:ditonton/presentation/pages/home_movie_page.dart';
+import 'package:ditonton/presentation/pages/home_tv_page.dart';
+import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
+
 class CustomDrawer extends StatefulWidget {
+  final String location;
   final Widget content;
 
   CustomDrawer({
     Key? key,
+    required this.location,
     required this.content,
   }) : super(key: key);
 
@@ -39,14 +45,12 @@ class _CustomDrawerState extends State<CustomDrawer>
           animation: _animationController,
           builder: (context, child) {
             double slide = 250.0 * _animationController.value;
-            // double scale = 1 - (_animationController.value * 0.3);
 
             return Stack(
               children: [
                 _buildDrawer(),
                 Transform(
                   transform: Matrix4.identity()..translate(slide),
-                  // ..scale(scale),
                   alignment: Alignment.centerLeft,
                   child: widget.content,
                 ),
@@ -68,22 +72,61 @@ class _CustomDrawerState extends State<CustomDrawer>
             accountEmail: Text('ditonton@dicoding.com'),
           ),
           ListTile(
+            leading: Icon(Icons.home),
+            title: Text('Home'),
+            onTap: () {
+              if (widget.location != MainPage.LOCATION) {
+                Navigator.pushNamed(context, MainPage.ROUTE_NAME);
+                toggle();
+              } else {
+                toggle();
+              }
+            },
+          ),
+          ListTile(
             leading: Icon(Icons.movie),
             title: Text('Movies'),
             onTap: () {
-              Navigator.pop(context);
+              if (widget.location != HomeMoviePage.LOCATION) {
+                Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
+                toggle();
+              } else {
+                toggle();
+              }
+            },
+          ),
+          ListTile(
+            leading: Icon(Icons.live_tv),
+            title: Text('TV Show'),
+            onTap: () {
+              if (widget.location != HomeTVPage.LOCATION) {
+                Navigator.pushNamed(context, HomeTVPage.ROUTE_NAME);
+                toggle();
+              } else {
+                toggle();
+              }
             },
           ),
           ListTile(
             leading: Icon(Icons.save_alt),
             title: Text('Watchlist'),
             onTap: () {
-              Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+              if (widget.location != WatchlistMoviesPage.LOCATION) {
+                Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+                toggle();
+              } else {
+                toggle();
+              }
             },
           ),
           ListTile(
             onTap: () {
-              Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+              if (widget.location != 'about') {
+                Navigator.pushNamed(context, AboutPage.ROUTE_NAME);
+                toggle();
+              } else {
+                toggle();
+              }
             },
             leading: Icon(Icons.info_outline),
             title: Text('About'),

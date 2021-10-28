@@ -67,7 +67,7 @@ class TvDetailResponse extends Equatable {
   final String posterPath;
   final List<NetworkModel>? productionCompanies;
   final List<ProductionCountryModel>? productionCountries;
-  final List<SeasonModel>? seasons;
+  final List<SeasonModel> seasons;
   final List<SpokenLanguageModel>? spokenLanguages;
   final String status;
   final String tagline;
@@ -155,7 +155,7 @@ class TvDetailResponse extends Equatable {
             List<dynamic>.from(productionCompanies!.map((x) => x.toJson())),
         "production_countries":
             List<dynamic>.from(productionCountries!.map((x) => x.toJson())),
-        "seasons": List<dynamic>.from(seasons!.map((x) => x.toJson())),
+        "seasons": List<dynamic>.from(seasons.map((x) => x.toJson())),
         "spoken_languages":
             List<dynamic>.from(spokenLanguages!.map((x) => x.toJson())),
         "status": status,
@@ -199,7 +199,7 @@ class TvDetailResponse extends Equatable {
           .productionCountries!
           .map((productionCountry) => productionCountry.toEntity())
           .toList(),
-      seasons: this.seasons!.map((season) => season.toEntity()).toList(),
+      seasons: this.seasons.map((season) => season.toEntity()).toList(),
       spokenLanguages:
           this.spokenLanguages!.map((language) => language.toEntity()).toList(),
       status: this.status,

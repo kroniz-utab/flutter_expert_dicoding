@@ -66,7 +66,7 @@ class TVDetail extends Equatable {
   final String posterPath;
   final List<Network>? productionCompanies;
   final List<ProductionCountry>? productionCountries;
-  final List<Season>? seasons;
+  final List<Season> seasons;
   final List<SpokenLanguage>? spokenLanguages;
   final String status;
   final String tagline;
