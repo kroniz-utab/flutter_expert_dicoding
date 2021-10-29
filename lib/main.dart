@@ -6,6 +6,7 @@ import 'package:ditonton/presentation/pages/movie_detail_page.dart';
 import 'package:ditonton/presentation/pages/home_movie_page.dart';
 import 'package:ditonton/presentation/pages/popular_movies_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/pages/season_detail_page.dart';
 import 'package:ditonton/presentation/pages/top_rated_movies_page.dart';
 import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 import 'package:ditonton/presentation/pages/watchlist_movies_page.dart';
@@ -20,6 +21,7 @@ import 'package:ditonton/presentation/provider/tv_provider/top_rated_tv_notifier
 import 'package:ditonton/presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_search_notifier.dart';
+import 'package:ditonton/presentation/provider/tv_provider/tv_season_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 
 import 'package:flutter/cupertino.dart';
@@ -73,6 +75,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TopRatedTVNotifier>(
           create: (context) => di.locator<TopRatedTVNotifier>(),
         ),
+        ChangeNotifierProvider<TVSeasonNotifier>(
+          create: (context) => di.locator<TVSeasonNotifier>(),
+        ),
       ],
       child: MaterialApp(
         title: 'Flutter Demo',
@@ -120,6 +125,17 @@ class MyApp extends StatelessWidget {
               return CupertinoPageRoute(
                 builder: (_) => TVDetailPage(id: id),
                 settings: settings,
+              );
+            case SeasonDetailPage.ROUTE_NAME:
+              final dataMap = settings.arguments as Map;
+              return CupertinoPageRoute(
+                builder: (context) => SeasonDetailPage(
+                  tvId: dataMap['tvId'],
+                  season: dataMap['seasonNumber'],
+                  tvPosterPath: dataMap['tvPosterPath'],
+                  seasonList: dataMap['seasonList'],
+                  tvName: dataMap['tvName'],
+                ),
               );
             default:
               return CupertinoPageRoute(builder: (_) {

@@ -1,9 +1,13 @@
 import 'package:ditonton/data/models/movie_models/genre_model.dart';
 import 'package:ditonton/data/models/movie_models/movie_table.dart';
 import 'package:ditonton/data/models/tv_models/createdby_model.dart';
+import 'package:ditonton/data/models/tv_models/crew_model.dart';
+import 'package:ditonton/data/models/tv_models/episode_model.dart';
 import 'package:ditonton/data/models/tv_models/episode_to_air_model.dart';
+import 'package:ditonton/data/models/tv_models/guest_star_model.dart';
 import 'package:ditonton/data/models/tv_models/network_model.dart';
 import 'package:ditonton/data/models/tv_models/production_country_model.dart';
+import 'package:ditonton/data/models/tv_models/season_detail_model.dart';
 import 'package:ditonton/data/models/tv_models/season_model.dart';
 import 'package:ditonton/data/models/tv_models/spoken_language_model.dart';
 import 'package:ditonton/data/models/tv_models/tv_detail_model.dart';
@@ -14,10 +18,14 @@ import 'package:ditonton/domain/entities/movie_entities/genre.dart';
 import 'package:ditonton/domain/entities/movie_entities/movie.dart';
 import 'package:ditonton/domain/entities/movie_entities/movie_detail.dart';
 import 'package:ditonton/domain/entities/tv_entities/created_by.dart';
+import 'package:ditonton/domain/entities/tv_entities/crew.dart';
+import 'package:ditonton/domain/entities/tv_entities/episode.dart';
 import 'package:ditonton/domain/entities/tv_entities/episode_to_air.dart';
+import 'package:ditonton/domain/entities/tv_entities/guest_star.dart';
 import 'package:ditonton/domain/entities/tv_entities/network.dart';
 import 'package:ditonton/domain/entities/tv_entities/production_country.dart';
 import 'package:ditonton/domain/entities/tv_entities/season.dart';
+import 'package:ditonton/domain/entities/tv_entities/season_detail.dart';
 import 'package:ditonton/domain/entities/tv_entities/spoken_language.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv.dart';
 import 'package:ditonton/domain/entities/tv_entities/tv_detail.dart';
@@ -342,4 +350,112 @@ final testTVFromCache = TV.watchlist(
   overview: 'overview',
   posterPath: '/path.jpg',
   name: 'name',
+);
+
+final testTvSeasonResponse = SeasonDetailModel(
+  id: 'stringId',
+  airDate: 'airDate',
+  episodes: [
+    EpisodeModel(
+      airDate: 'airDate',
+      episodeNumber: 1,
+      crew: [
+        CrewModel(
+          job: 'job',
+          department: 'department',
+          creditId: 'creditId',
+          adult: true,
+          gender: 0,
+          id: 1,
+          knownForDepartment: 'knownForDepartment',
+          name: 'name',
+          originalName: 'originalName',
+          popularity: 12.2,
+          profilePath: 'profilePath',
+        ),
+      ],
+      guestStars: [
+        GuestStarModel(
+          character: 'character',
+          creditId: 'creditId',
+          order: 1,
+          adult: true,
+          gender: 1,
+          id: 1,
+          knownForDepartment: 'knownForDepartment',
+          name: 'name',
+          originalName: 'originalName',
+          popularity: 1,
+          profilePath: 'profilePath',
+        ),
+      ],
+      id: 1,
+      name: 'name',
+      overview: 'overview',
+      productionCode: 'productionCode',
+      seasonNumber: 1,
+      stillPath: 'stillPath',
+      voteAverage: 12.2,
+      voteCount: 33,
+    ),
+  ],
+  name: 'name',
+  overview: 'overview',
+  seasonDetailModelId: 1,
+  posterPath: 'posterPath',
+  seasonNumber: 1,
+);
+
+final testTvSeason = SeasonDetail(
+  id: 'stringId',
+  airDate: 'airDate',
+  episodes: [
+    Episode(
+      airDate: 'airDate',
+      episodeNumber: 1,
+      crew: [
+        Crew(
+          job: 'job',
+          department: 'department',
+          creditId: 'creditId',
+          adult: true,
+          gender: 0,
+          id: 1,
+          knownForDepartment: 'knownForDepartment',
+          name: 'name',
+          originalName: 'originalName',
+          popularity: 12.2,
+          profilePath: 'profilePath',
+        ),
+      ],
+      guestStars: [
+        GuestStar(
+          character: 'character',
+          creditId: 'creditId',
+          order: 1,
+          adult: true,
+          gender: 1,
+          id: 1,
+          knownForDepartment: 'knownForDepartment',
+          name: 'name',
+          originalName: 'originalName',
+          popularity: 1,
+          profilePath: 'profilePath',
+        ),
+      ],
+      id: 1,
+      name: 'name',
+      overview: 'overview',
+      productionCode: 'productionCode',
+      seasonNumber: 1,
+      stillPath: 'stillPath',
+      voteAverage: 12.2,
+      voteCount: 33,
+    ),
+  ],
+  name: 'name',
+  overview: 'overview',
+  seasonDetailModelId: 1,
+  posterPath: 'posterPath',
+  seasonNumber: 1,
 );

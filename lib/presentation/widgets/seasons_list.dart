@@ -3,17 +3,24 @@ import 'package:flutter/material.dart';
 
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/domain/entities/tv_entities/season.dart';
+import 'package:ditonton/presentation/pages/season_detail_page.dart';
 
 class SeasonsList extends StatelessWidget {
+  final int tvId;
   final List<Season> tv;
   final String tvPosterPath;
+  final String tvName;
   final double? height;
+  final bool isReplacement;
 
   const SeasonsList({
     Key? key,
+    required this.tvId,
     required this.tv,
     required this.tvPosterPath,
-    this.height,
+    required this.tvName,
+    required this.height,
+    required this.isReplacement,
   }) : super(key: key);
 
   @override
@@ -28,11 +35,31 @@ class SeasonsList extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                // Navigator.pushNamed(
-                //   context,
-                //   TVDetailPage.ROUTE_NAME,
-                //   arguments: tvs.id,
-                // );
+                if (isReplacement) {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    SeasonDetailPage.ROUTE_NAME,
+                    arguments: {
+                      'tvId': tvId,
+                      'seasonNumber': tvs.seasonNumber,
+                      'tvPosterPath': tvPosterPath,
+                      'seasonList': tv,
+                      'tvName': tvName,
+                    },
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    SeasonDetailPage.ROUTE_NAME,
+                    arguments: {
+                      'tvId': tvId,
+                      'seasonNumber': tvs.seasonNumber,
+                      'tvPosterPath': tvPosterPath,
+                      'seasonList': tv,
+                      'tvName': tvName,
+                    },
+                  );
+                }
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),

@@ -70,6 +70,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                       return TVListLayout(
                         tv: data.tvOnTheAir,
                         height: 200,
+                        isReplacement: false,
                       );
                     } else {
                       return Text('Failed');
@@ -88,6 +89,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                       return TVListLayout(
                         tv: data.popularTVShows,
                         height: 200,
+                        isReplacement: false,
                       );
                     } else {
                       return Text('Failed');
@@ -106,6 +108,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                       return TVListLayout(
                         tv: data.topRatedTVShows,
                         height: 200,
+                        isReplacement: false,
                       );
                     } else {
                       return Text('Failed');

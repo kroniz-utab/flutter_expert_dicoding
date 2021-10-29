@@ -8,11 +8,13 @@ import 'package:ditonton/presentation/pages/tv_detail_page.dart';
 class TVListLayout extends StatelessWidget {
   final List<TV> tv;
   final double? height;
+  final bool isReplacement;
 
   const TVListLayout({
     Key? key,
     required this.tv,
-    this.height,
+    required this.height,
+    required this.isReplacement,
   }) : super(key: key);
 
   @override
@@ -27,11 +29,19 @@ class TVListLayout extends StatelessWidget {
             padding: const EdgeInsets.all(8),
             child: InkWell(
               onTap: () {
-                Navigator.pushNamed(
-                  context,
-                  TVDetailPage.ROUTE_NAME,
-                  arguments: movie.id,
-                );
+                if (isReplacement) {
+                  Navigator.pushReplacementNamed(
+                    context,
+                    TVDetailPage.ROUTE_NAME,
+                    arguments: movie.id,
+                  );
+                } else {
+                  Navigator.pushNamed(
+                    context,
+                    TVDetailPage.ROUTE_NAME,
+                    arguments: movie.id,
+                  );
+                }
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.all(Radius.circular(16)),

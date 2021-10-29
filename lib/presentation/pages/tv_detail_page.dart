@@ -169,6 +169,7 @@ class DetailContent extends StatelessWidget {
                                 tv.inProduction
                                     ? Text('In Productions')
                                     : Text('Not In Production'),
+                                Text(' (${tv.status})'),
                               ],
                             ),
                             Row(
@@ -208,9 +209,12 @@ class DetailContent extends StatelessWidget {
                               style: kHeading6,
                             ),
                             SeasonsList(
+                              tvId: tv.id,
                               tv: tv.seasons,
                               height: 150,
                               tvPosterPath: tv.posterPath,
+                              tvName: tv.name,
+                              isReplacement: false,
                             ),
                             SizedBox(height: 16),
                             Text(
@@ -232,6 +236,7 @@ class DetailContent extends StatelessWidget {
                                   return TVListLayout(
                                     tv: data.tvRecommendations,
                                     height: 150,
+                                    isReplacement: true,
                                   );
                                 } else {
                                   return Container();
@@ -258,6 +263,7 @@ class DetailContent extends StatelessWidget {
                                   return TVListLayout(
                                     tv: data.similarTVShows,
                                     height: 150,
+                                    isReplacement: true,
                                   );
                                 } else {
                                   return Container();

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 const String BASE_IMAGE_URL = 'https://image.tmdb.org/t/p/w500';
+const String BASE_IMG_NOT_PREVIEWED =
+    'https://st4.depositphotos.com/14953852/24787/v/600/depositphotos_247872612-stock-illustration-no-image-available-icon-vector.jpg';
 
 // colors
 const Color kRichBlack = Color(0xFF000814);
@@ -20,6 +22,8 @@ final TextStyle kSubtitle = GoogleFonts.poppins(
     fontSize: 15, fontWeight: FontWeight.w400, letterSpacing: 0.15);
 final TextStyle kBodyText = GoogleFonts.poppins(
     fontSize: 13, fontWeight: FontWeight.w400, letterSpacing: 0.25);
+final TextStyle kSmallText = GoogleFonts.poppins(
+    fontSize: 12, fontWeight: FontWeight.w400, letterSpacing: 0.15);
 
 // text theme
 final kTextTheme = TextTheme(
