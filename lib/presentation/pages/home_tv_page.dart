@@ -1,6 +1,8 @@
 import 'package:ditonton/common/constants.dart';
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/presentation/pages/popular_tv_page.dart';
 import 'package:ditonton/presentation/pages/search_page.dart';
+import 'package:ditonton/presentation/pages/top_rated_tv_page.dart';
 import 'package:ditonton/presentation/provider/tv_provider/tv_list_notifier.dart';
 import 'package:ditonton/presentation/widgets/custom_drawer.dart';
 import 'package:ditonton/presentation/widgets/tv_list.dart';
@@ -76,9 +78,12 @@ class _HomeTVPageState extends State<HomeTVPage> {
                       return Text('Failed');
                     }
                   }),
-                  _buildSubHeading(title: 'Popular TV Shows', onTap: () {}
-                      // Navigator.pushNamed(context, PopularMoviesPage.ROUTE_NAME),
-                      ),
+                  _buildSubHeading(
+                    title: 'Popular TV Shows',
+                    onTap: () {
+                      Navigator.pushNamed(context, PopularTVPage.ROUTE_NAME);
+                    },
+                  ),
                   Consumer<TVListNotifier>(builder: (context, data, child) {
                     final state = data.popularTVShowsState;
                     if (state == RequestState.Loading) {
@@ -95,9 +100,12 @@ class _HomeTVPageState extends State<HomeTVPage> {
                       return Text('Failed');
                     }
                   }),
-                  _buildSubHeading(title: 'Top Rated', onTap: () {}
-                      // Navigator.pushNamed(context, TopRatedMoviesPage.ROUTE_NAME),
-                      ),
+                  _buildSubHeading(
+                    title: 'Top Rated',
+                    onTap: () {
+                      Navigator.pushNamed(context, TopRatedTVPage.ROUTE_NAME);
+                    },
+                  ),
                   Consumer<TVListNotifier>(builder: (context, data, child) {
                     final state = data.topRatedTVShowsState;
                     if (state == RequestState.Loading) {

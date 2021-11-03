@@ -37,7 +37,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
         content: Scaffold(
           appBar: AppBar(
             leading: Icon(Icons.menu),
-            title: Text('Ditonton'),
+            title: Text('Movies'),
             actions: [
               IconButton(
                 onPressed: () {
