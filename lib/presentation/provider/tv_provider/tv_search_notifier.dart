@@ -33,9 +33,16 @@ class TVSearchNotifier extends ChangeNotifier {
         notifyListeners();
       },
       (result) {
-        _searchResult = result;
-        _state = RequestState.Loaded;
-        notifyListeners();
+        if (result.length == 0) {
+          _state = RequestState.Empty;
+          _message =
+              'Yah, acara yang kamu cari tidak ada :(, coba dengan keyword yang lain';
+          notifyListeners();
+        } else {
+          _searchResult = result;
+          _state = RequestState.Loaded;
+          notifyListeners();
+        }
       },
     );
   }

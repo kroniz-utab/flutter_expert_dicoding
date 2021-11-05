@@ -73,6 +73,18 @@ class SearchPage extends StatelessWidget {
                   itemCount: result.length,
                 ),
               );
+            } else if (data.state == RequestState.Empty) {
+              return Expanded(
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      data.message,
+                      style: kSubtitle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
+              );
             } else {
               return Expanded(
                 child: Container(),
@@ -124,6 +136,18 @@ class SearchPage extends StatelessWidget {
                     );
                   },
                   itemCount: result.length,
+                ),
+              );
+            } else if (data.state == RequestState.Empty) {
+              return Expanded(
+                child: Container(
+                  child: Center(
+                    child: Text(
+                      data.message,
+                      style: kSubtitle,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
                 ),
               );
             } else {

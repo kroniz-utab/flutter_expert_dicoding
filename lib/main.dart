@@ -1,4 +1,5 @@
 import 'package:ditonton/common/constants.dart';
+import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/pages/about_page.dart';
 import 'package:ditonton/presentation/pages/home_tv_page.dart';
 import 'package:ditonton/presentation/pages/main_page.dart';
@@ -91,6 +92,7 @@ class MyApp extends StatelessWidget {
           textTheme: kTextTheme,
         ),
         home: MainPage(),
+        navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case MainPage.ROUTE_NAME:

@@ -1,4 +1,5 @@
 import 'package:ditonton/common/state_enum.dart';
+import 'package:ditonton/common/utils.dart';
 import 'package:ditonton/presentation/provider/movies_provider/watchlist_movie_notifier.dart';
 import 'package:ditonton/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 import 'package:ditonton/presentation/widgets/custom_drawer.dart';
@@ -15,7 +16,8 @@ class WatchlistMoviesPage extends StatefulWidget {
   _WatchlistMoviesPageState createState() => _WatchlistMoviesPageState();
 }
 
-class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
+class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
+    with RouteAware {
   @override
   void initState() {
     super.initState();
@@ -25,6 +27,20 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
     Future.microtask(() =>
         Provider.of<WatchlistTVNotifier>(context, listen: false)
             .fetchWatchlistTVShow());
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  @override
+  void didPopNext() {
+    Provider.of<WatchlistMovieNotifier>(context, listen: false)
+        .fetchWatchlistMovies();
+    Provider.of<WatchlistTVNotifier>(context, listen: false)
+        .fetchWatchlistTVShow();
   }
 
   @override
@@ -48,6 +64,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
+                      } else if (data.watchlistState == RequestState.Empty) {
+                        return SizedBox();
                       } else if (data.watchlistState == RequestState.Loaded) {
                         return ListView.builder(
                           shrinkWrap: true,
@@ -75,6 +93,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
+                      } else if (data.watchlistState == RequestState.Empty) {
+                        return SizedBox();
                       } else if (data.watchlistState == RequestState.Loaded) {
                         return ListView.builder(
                           shrinkWrap: true,
@@ -95,7 +115,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
                         );
                       }
                     },
-                  )
+                  ),
                 ],
               ),
             ),
@@ -103,5 +123,11 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    routeObserver.unsubscribe(this);
+    super.dispose();
   }
 }

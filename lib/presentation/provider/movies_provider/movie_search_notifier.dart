@@ -29,9 +29,16 @@ class MovieSearchNotifier extends ChangeNotifier {
         notifyListeners();
       },
       (data) {
-        _searchResult = data;
-        _state = RequestState.Loaded;
-        notifyListeners();
+        if (data.length == 0) {
+          _state = RequestState.Empty;
+          _message =
+              'Yah, film yang kamu cari tidak ada :(, coba dengan keyword yang lain';
+          notifyListeners();
+        } else {
+          _searchResult = data;
+          _state = RequestState.Loaded;
+          notifyListeners();
+        }
       },
     );
   }

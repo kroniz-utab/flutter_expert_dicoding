@@ -31,9 +31,15 @@ class WatchlistTVNotifier extends ChangeNotifier {
         _message = failure.message;
       },
       (data) {
-        _watchlistState = RequestState.Loaded;
-        _watchlistTVShow = data;
-        notifyListeners();
+        if (data.length == 0) {
+          _watchlistState = RequestState.Empty;
+          _message = 'Watchlist kamu masih kosong nih!';
+          notifyListeners();
+        } else {
+          _watchlistState = RequestState.Loaded;
+          _watchlistTVShow = data;
+          notifyListeners();
+        }
       },
     );
   }
