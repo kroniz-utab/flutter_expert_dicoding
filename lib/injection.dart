@@ -16,7 +16,6 @@ import 'package:core/domain/usecases/movie_usecases/get_watchlist_movies.dart';
 import 'package:core/domain/usecases/movie_usecases/get_watchlist_status.dart';
 import 'package:core/domain/usecases/movie_usecases/remove_watchlist.dart';
 import 'package:core/domain/usecases/movie_usecases/save_watchlist.dart';
-import 'package:core/domain/usecases/movie_usecases/search_movies.dart';
 import 'package:core/domain/usecases/tv_usecases/get_popular_tv_show.dart';
 import 'package:core/domain/usecases/tv_usecases/get_similar_tv_shows.dart';
 import 'package:core/domain/usecases/tv_usecases/get_top_rated_tv_show.dart';
@@ -28,10 +27,8 @@ import 'package:core/domain/usecases/tv_usecases/get_watchlist_tv_status.dart';
 import 'package:core/domain/usecases/tv_usecases/get_watchlist_tvshow.dart';
 import 'package:core/domain/usecases/tv_usecases/remove_tv_watchlist.dart';
 import 'package:core/domain/usecases/tv_usecases/save_tv_watchlist.dart';
-import 'package:core/domain/usecases/tv_usecases/search_tv_shows.dart';
 import 'package:core/presentation/provider/movies_provider/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/movie_list_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/movie_search_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/popular_movies_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/top_rated_movies_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/watchlist_movie_notifier.dart';
@@ -39,11 +36,11 @@ import 'package:core/presentation/provider/tv_provider/popular_tv_notifier.dart'
 import 'package:core/presentation/provider/tv_provider/top_rated_tv_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/tv_search_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_season_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
+import 'package:search/search.dart';
 
 final locator = GetIt.instance;
 

@@ -78,7 +78,7 @@ class _CustomDrawerState extends State<CustomDrawer>
           title: Text('Home'),
           onTap: () {
             if (widget.location != MainPage.LOCATION) {
-              Navigator.pushNamed(context, MainPage.ROUTE_NAME);
+              Navigator.pushNamed(context, MAIN_ROUTE);
               toggle();
             } else {
               toggle();
@@ -90,7 +90,7 @@ class _CustomDrawerState extends State<CustomDrawer>
           title: Text('Movies'),
           onTap: () {
             if (widget.location != HomeMoviePage.LOCATION) {
-              Navigator.pushNamed(context, HomeMoviePage.ROUTE_NAME);
+              Navigator.pushNamed(context, MOVIE_ROUTE);
               toggle();
             } else {
               toggle();
@@ -102,7 +102,7 @@ class _CustomDrawerState extends State<CustomDrawer>
           title: Text('TV Show'),
           onTap: () {
             if (widget.location != HomeTVPage.LOCATION) {
-              Navigator.pushNamed(context, HomeTVPage.ROUTE_NAME);
+              Navigator.pushNamed(context, TV_ROUTE);
               toggle();
             } else {
               toggle();
@@ -114,7 +114,7 @@ class _CustomDrawerState extends State<CustomDrawer>
           title: Text('Watchlist'),
           onTap: () {
             if (widget.location != WatchlistMoviesPage.LOCATION) {
-              Navigator.pushNamed(context, WatchlistMoviesPage.ROUTE_NAME);
+              Navigator.pushNamed(context, WATCHLIST_ROUTE);
               toggle();
             } else {
               toggle();

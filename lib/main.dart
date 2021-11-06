@@ -7,7 +7,6 @@ import 'package:core/presentation/pages/movie_detail_page.dart';
 import 'package:core/presentation/pages/home_movie_page.dart';
 import 'package:core/presentation/pages/popular_movies_page.dart';
 import 'package:core/presentation/pages/popular_tv_page.dart';
-import 'package:core/presentation/pages/search_page.dart';
 import 'package:core/presentation/pages/season_detail_page.dart';
 import 'package:core/presentation/pages/top_rated_movies_page.dart';
 import 'package:core/presentation/pages/top_rated_tv_page.dart';
@@ -15,7 +14,6 @@ import 'package:core/presentation/pages/tv_detail_page.dart';
 import 'package:core/presentation/pages/watchlist_movies_page.dart';
 import 'package:core/presentation/provider/movies_provider/movie_detail_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/movie_list_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/movie_search_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/popular_movies_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/top_rated_movies_notifier.dart';
 import 'package:core/presentation/provider/movies_provider/watchlist_movie_notifier.dart';
@@ -23,7 +21,6 @@ import 'package:core/presentation/provider/tv_provider/popular_tv_notifier.dart'
 import 'package:core/presentation/provider/tv_provider/top_rated_tv_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_detail_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/tv_search_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/tv_season_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 
@@ -31,6 +28,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:ditonton/injection.dart' as di;
+import 'package:search/search.dart';
 
 void main() {
   di.init();

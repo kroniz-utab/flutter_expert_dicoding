@@ -4,13 +4,11 @@ import 'package:dartz/dartz.dart';
 import 'package:core/utils/failure.dart';
 import 'package:core/utils/state_enum.dart';
 import 'package:core/domain/entities/tv_entities/tv.dart';
-import 'package:core/domain/usecases/tv_usecases/search_tv_shows.dart';
-import 'package:core/presentation/provider/tv_provider/tv_search_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:search/search.dart';
 
-import '../../../dummy_data/dummy_objects.dart';
 import 'tv_search_notifier_test.mocks.dart';
 
 @GenerateMocks([SearchTVShows])
@@ -27,6 +25,22 @@ void main() {
         listenerCallCount += 1;
       });
   });
+
+  final testTVEntity = TV(
+    backdropPath: '/path.jpg',
+    firstAirDate: 'firstAirDate',
+    genreIds: const [1, 2, 3],
+    id: 1,
+    name: 'name',
+    originCountry: const ['originCountry'],
+    originalLanguage: 'originalLanguage',
+    originalName: 'originalName',
+    overview: 'overview',
+    popularity: 9.9,
+    posterPath: '/path.jpg',
+    voteAverage: 9.9,
+    voteCount: 1,
+  );
 
   final tTVList = <TV>[testTVEntity];
   const tQuery = 'gambit';

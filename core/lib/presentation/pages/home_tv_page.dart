@@ -1,10 +1,10 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:core/core.dart';
+import 'package:core/utils/routes.dart';
 
 import '../../utils/state_enum.dart';
 import 'popular_tv_page.dart';
-import 'search_page.dart';
 import 'top_rated_tv_page.dart';
 import '../../presentation/provider/tv_provider/tv_list_notifier.dart';
 import '../../presentation/widgets/custom_drawer.dart';
@@ -47,7 +47,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
-                    SearchPage.ROUTE_NAME,
+                    SEARCH_ROUTE,
                     arguments: false,
                   );
                 },

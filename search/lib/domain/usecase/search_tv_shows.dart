@@ -1,7 +1,7 @@
+import 'package:core/core.dart';
+import 'package:core/domain/entities/tv_entities/tv.dart';
+import 'package:core/domain/repositories/tv_repository.dart';
 import 'package:dartz/dartz.dart';
-import '../../../utils/failure.dart';
-import '../../../domain/entities/tv_entities/tv.dart';
-import '../../../domain/repositories/tv_repository.dart';
 
 class SearchTVShows {
   final TVRepository repository;

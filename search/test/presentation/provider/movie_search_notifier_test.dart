@@ -4,11 +4,11 @@ import 'package:dartz/dartz.dart';
 import 'package:core/utils/failure.dart';
 import 'package:core/utils/state_enum.dart';
 import 'package:core/domain/entities/movie_entities/movie.dart';
-import 'package:core/domain/usecases/movie_usecases/search_movies.dart';
-import 'package:core/presentation/provider/movies_provider/movie_search_notifier.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
+import 'package:search/domain/usecase/search_movies.dart';
+import 'package:search/search.dart';
 
 import 'movie_search_notifier_test.mocks.dart';
 

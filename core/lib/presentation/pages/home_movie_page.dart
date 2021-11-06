@@ -1,9 +1,9 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:core/styles/text_styles.dart';
+import 'package:core/utils/routes.dart';
 
 import 'popular_movies_page.dart';
-import 'search_page.dart';
 import 'top_rated_movies_page.dart';
 import '../../../presentation/provider/movies_provider/movie_list_notifier.dart';
 import '../../../utils/state_enum.dart';
@@ -48,7 +48,7 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
-                    SearchPage.ROUTE_NAME,
+                    SEARCH_ROUTE,
                     arguments: true,
                   );
                 },
