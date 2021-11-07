@@ -3,12 +3,12 @@
 import 'package:core/core.dart';
 import 'package:core/presentation/widgets/movie_card_list.dart';
 import 'package:core/presentation/widgets/tv_card_list.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:search/bloc/search_bloc.dart';
 
 import '../provider/tv_search_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
-import '../provider/movie_search_notifier.dart';
 
 class SearchPage extends StatelessWidget {
   static const ROUTE_NAME = '/search';
@@ -38,9 +38,8 @@ class SearchPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
-          onSubmitted: (query) {
-            Provider.of<MovieSearchNotifier>(context, listen: false)
-                .fetchMovieSearch(query);
+          onChanged: (query) {
+            context.read<SearchBloc>().add(OnQueryChange(query));
           },
           decoration: InputDecoration(
             hintText: 'Search Movies Title',
@@ -54,19 +53,19 @@ class SearchPage extends StatelessWidget {
           'Search Result',
           style: kHeading6,
         ),
-        Consumer<MovieSearchNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        BlocBuilder<SearchBloc, SearchState>(
+          builder: (context, state) {
+            if (state is SearchLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
-              final result = data.searchResult;
+            } else if (state is SearchHasData) {
+              final result = state.result;
               return Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.all(8),
+                  padding: const EdgeInsets.all(8.0),
                   itemBuilder: (context, index) {
-                    final movie = data.searchResult[index];
+                    final movie = result[index];
                     return MovieCard(
                       movie: movie,
                       isWatchlist: false,
@@ -75,23 +74,27 @@ class SearchPage extends StatelessWidget {
                   itemCount: result.length,
                 ),
               );
-            } else if (data.state == RequestState.Empty) {
+            } else if (state is SearchError) {
+              return Expanded(
+                child: Center(
+                  child: Text(state.message),
+                ),
+              );
+            } else if (state is SearchEmpty) {
               return Expanded(
                 child: Center(
                   child: Text(
-                    data.message,
+                    'Yah, Film yang kamu cari gak ada :(',
                     style: kSubtitle,
                     textAlign: TextAlign.center,
                   ),
                 ),
               );
             } else {
-              return Expanded(
-                child: Container(),
-              );
+              return SizedBox();
             }
           },
-        ),
+        )
       ],
     );
   }

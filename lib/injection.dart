@@ -40,6 +40,7 @@ import 'package:core/presentation/provider/tv_provider/tv_season_notifier.dart';
 import 'package:core/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
+import 'package:search/bloc/search_bloc.dart';
 import 'package:search/search.dart';
 
 final locator = GetIt.instance;
@@ -125,6 +126,9 @@ void init() {
       getTVSeasonDetail: locator(),
     ),
   );
+
+  // bloc
+  locator.registerFactory(() => SearchBloc(locator()));
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));

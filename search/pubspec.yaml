@@ -8,18 +8,22 @@ environment:
   flutter: ">=1.17.0"
 
 dependencies:
-  dartz: ^0.10.0
-  flutter:
-    sdk: flutter
   core:
     path: ../core
+  dartz: ^0.10.0
+  equatable: ^2.0.3
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^7.1.0
+  rxdart: ^0.27.2
 
 dev_dependencies:
+  bloc_test: ^8.5.0
+  build_runner: ^2.1.4
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
   mockito: ^5.0.16
-  build_runner: ^2.1.4
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
