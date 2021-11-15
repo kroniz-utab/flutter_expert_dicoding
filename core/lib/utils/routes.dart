@@ -1,13 +1,18 @@
-const MOVIE_ROUTE = '/movie-page';
-const TV_ROUTE = '/tv-page';
-const MAIN_ROUTE = '/main-pages';
-const MOVIE_DETAIL_ROUTE = '/movie-detail';
-const POPULAR_MOVIES_ROUTE = '/popular-movie';
-const POPULAR_TV_ROUTE = '/popular-tv';
-const SEARCH_ROUTE = '/search';
-const SEASON_DETAIL_ROUTE = '/tv-season';
-const TOP_RATED_MOVIES_ROUTE = '/top-rated-movie';
-const TOP_RATED_TV_ROUTE = '/top-rated-tv';
-const TV_DETAIL_ROUTE = '/tv-detail';
-const WATCHLIST_ROUTE = '/watchlist';
-const ABOUT_ROUTE = '/about';
+/// Movie Routes
+const movieRoutes = '/movie-page'; // to HomeMoviePage
+const movieDetailRoutes = '/movie-detail'; // to MovieDetailPage
+const popularMovieRoutes = '/popular-movie'; // to PopularMoviesPage
+const topRatedMovieRoutes = '/top-rated-movie'; // to TopRatedMoviesPage
+
+/// TV Routes
+const tvRoutes = '/tv-page'; // to HomeTVPage
+const popularTVRoutes = '/popular-tv'; // to PopularTVPage
+const topRatedTVRoutes = '/top-rated-tv'; // to TopRatedTVPage
+const seasonDetailRoutes = '/tv-season'; // to TVDetailPage
+const tvDetailRoutes = '/tv-detail'; // to TVDetailPage
+
+/// Universal Routes
+const mainRoutes = '/main-pages'; // to MainPage
+const searchRoutes = '/search'; // to SearchPage
+const watchlistRoutes = '/watchlist'; // to WatchlistPages
+const aboutRoutes = '/about'; // to aboutPage

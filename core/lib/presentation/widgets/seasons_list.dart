@@ -3,9 +3,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/routes.dart';
 import '../../utils/constants.dart';
 import '../../domain/entities/tv_entities/season.dart';
-import '../../presentation/pages/season_detail_page.dart';
 
 class SeasonsList extends StatelessWidget {
   final int tvId;
@@ -40,7 +40,7 @@ class SeasonsList extends StatelessWidget {
                 if (isReplacement) {
                   Navigator.pushReplacementNamed(
                     context,
-                    SeasonDetailPage.ROUTE_NAME,
+                    seasonDetailRoutes,
                     arguments: {
                       'tvId': tvId,
                       'seasonNumber': tvs.seasonNumber,
@@ -52,7 +52,7 @@ class SeasonsList extends StatelessWidget {
                 } else {
                   Navigator.pushNamed(
                     context,
-                    SeasonDetailPage.ROUTE_NAME,
+                    seasonDetailRoutes,
                     arguments: {
                       'tvId': tvId,
                       'seasonNumber': tvs.seasonNumber,

@@ -1,11 +1,11 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:core/styles/text_styles.dart';
-import '../../utils/constants.dart';
-import '../../presentation/pages/tv_detail_page.dart';
 import 'package:flutter/material.dart';
 
+import '../../styles/text_styles.dart';
+import '../../utils/routes.dart';
+import '../../utils/constants.dart';
 import '../../domain/entities/tv_entities/tv.dart';
 
 class TVShowCard extends StatelessWidget {
@@ -25,7 +25,7 @@ class TVShowCard extends StatelessWidget {
         onTap: () {
           Navigator.pushNamed(
             context,
-            TVDetailPage.ROUTE_NAME,
+            tvDetailRoutes,
             arguments: tv.id,
           );
         },

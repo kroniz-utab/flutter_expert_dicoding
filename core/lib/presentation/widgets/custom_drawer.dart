@@ -1,13 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:core/utils/routes.dart';
-
-import '../../presentation/pages/main_page.dart';
 import 'package:flutter/material.dart';
-
-import '../../presentation/pages/home_movie_page.dart';
-import '../../presentation/pages/home_tv_page.dart';
-import '../../presentation/pages/watchlist_movies_page.dart';
 
 class CustomDrawer extends StatefulWidget {
   final String location;
@@ -77,8 +71,8 @@ class _CustomDrawerState extends State<CustomDrawer>
           leading: Icon(Icons.home),
           title: Text('Home'),
           onTap: () {
-            if (widget.location != MainPage.LOCATION) {
-              Navigator.pushNamed(context, MAIN_ROUTE);
+            if (widget.location != mainRoutes) {
+              Navigator.pushNamed(context, mainRoutes);
               toggle();
             } else {
               toggle();
@@ -89,8 +83,8 @@ class _CustomDrawerState extends State<CustomDrawer>
           leading: Icon(Icons.movie),
           title: Text('Movies'),
           onTap: () {
-            if (widget.location != HomeMoviePage.LOCATION) {
-              Navigator.pushNamed(context, MOVIE_ROUTE);
+            if (widget.location != movieRoutes) {
+              Navigator.pushNamed(context, movieRoutes);
               toggle();
             } else {
               toggle();
@@ -101,8 +95,8 @@ class _CustomDrawerState extends State<CustomDrawer>
           leading: Icon(Icons.live_tv),
           title: Text('TV Show'),
           onTap: () {
-            if (widget.location != HomeTVPage.LOCATION) {
-              Navigator.pushNamed(context, TV_ROUTE);
+            if (widget.location != tvRoutes) {
+              Navigator.pushNamed(context, tvRoutes);
               toggle();
             } else {
               toggle();
@@ -113,8 +107,8 @@ class _CustomDrawerState extends State<CustomDrawer>
           leading: Icon(Icons.save_alt),
           title: Text('Watchlist'),
           onTap: () {
-            if (widget.location != WatchlistMoviesPage.LOCATION) {
-              Navigator.pushNamed(context, WATCHLIST_ROUTE);
+            if (widget.location != watchlistRoutes) {
+              Navigator.pushNamed(context, watchlistRoutes);
               toggle();
             } else {
               toggle();
@@ -123,8 +117,8 @@ class _CustomDrawerState extends State<CustomDrawer>
         ),
         ListTile(
           onTap: () {
-            if (widget.location != 'about') {
-              Navigator.pushNamed(context, ABOUT_ROUTE);
+            if (widget.location != aboutRoutes) {
+              Navigator.pushNamed(context, aboutRoutes);
               toggle();
             } else {
               toggle();

@@ -3,9 +3,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
+import '../../utils/routes.dart';
 import '../../utils/constants.dart';
 import '../../domain/entities/tv_entities/tv.dart';
-import '../../presentation/pages/tv_detail_page.dart';
 
 class TVListLayout extends StatelessWidget {
   final List<TV> tv;
@@ -34,13 +34,13 @@ class TVListLayout extends StatelessWidget {
                 if (isReplacement) {
                   Navigator.pushReplacementNamed(
                     context,
-                    TVDetailPage.ROUTE_NAME,
+                    tvDetailRoutes,
                     arguments: movie.id,
                   );
                 } else {
                   Navigator.pushNamed(
                     context,
-                    TVDetailPage.ROUTE_NAME,
+                    tvDetailRoutes,
                     arguments: movie.id,
                   );
                 }

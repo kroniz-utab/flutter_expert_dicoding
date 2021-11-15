@@ -1,36 +1,17 @@
 import 'package:core/core.dart';
-import 'package:core/utils/utils.dart';
 import 'package:about/about_page.dart';
-import 'package:core/presentation/pages/home_tv_page.dart';
-import 'package:core/presentation/pages/main_page.dart';
-import 'package:core/presentation/pages/movie_detail_page.dart';
-import 'package:core/presentation/pages/home_movie_page.dart';
-import 'package:core/presentation/pages/popular_movies_page.dart';
-import 'package:core/presentation/pages/popular_tv_page.dart';
-import 'package:core/presentation/pages/season_detail_page.dart';
-import 'package:core/presentation/pages/top_rated_movies_page.dart';
-import 'package:core/presentation/pages/top_rated_tv_page.dart';
-import 'package:core/presentation/pages/tv_detail_page.dart';
-import 'package:core/presentation/pages/watchlist_movies_page.dart';
-import 'package:core/presentation/provider/movies_provider/movie_detail_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/movie_list_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/popular_movies_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/top_rated_movies_notifier.dart';
-import 'package:core/presentation/provider/movies_provider/watchlist_movie_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/popular_tv_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/top_rated_tv_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/tv_detail_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/tv_list_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/tv_season_notifier.dart';
-import 'package:core/presentation/provider/tv_provider/watchlist_tv_notifier.dart';
+import 'package:ditonton/main_page.dart';
+import 'package:ditonton/injection.dart' as di;
+import 'package:search/bloc/search_bloc.dart';
+import 'package:search/search.dart';
+import 'package:movie/movie.dart';
+import 'package:tv/tv.dart';
+import 'package:watchlist/watchlist.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:ditonton/injection.dart' as di;
-import 'package:search/bloc/search_bloc.dart';
-import 'package:search/search.dart';
 
 void main() {
   di.init();
@@ -47,9 +28,6 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<MovieDetailNotifier>(),
-        ),
-        ChangeNotifierProvider(
-          create: (_) => di.locator<MovieSearchNotifier>(),
         ),
         ChangeNotifierProvider(
           create: (_) => di.locator<TopRatedMoviesNotifier>(),
@@ -99,50 +77,50 @@ class MyApp extends StatelessWidget {
         navigatorObservers: [routeObserver],
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
-            case MainPage.ROUTE_NAME:
+            case mainRoutes:
               return CupertinoPageRoute(builder: (_) => MainPage());
-            case HomeMoviePage.ROUTE_NAME:
+            case movieRoutes:
               return CupertinoPageRoute(builder: (_) => HomeMoviePage());
-            case PopularMoviesPage.ROUTE_NAME:
+            case popularMovieRoutes:
               return CupertinoPageRoute(builder: (_) => PopularMoviesPage());
-            case TopRatedMoviesPage.ROUTE_NAME:
+            case topRatedMovieRoutes:
               return CupertinoPageRoute(builder: (_) => TopRatedMoviesPage());
-            case MovieDetailPage.ROUTE_NAME:
+            case movieDetailRoutes:
               final id = settings.arguments as int;
               return CupertinoPageRoute(
                 builder: (_) => MovieDetailPage(id: id),
                 settings: settings,
               );
-            case SearchPage.ROUTE_NAME:
+            case searchRoutes:
               final args = settings.arguments as bool;
               return CupertinoPageRoute(
                 builder: (_) => SearchPage(
                   isMovieSearch: args,
                 ),
               );
-            case WatchlistMoviesPage.ROUTE_NAME:
+            case watchlistRoutes:
               return CupertinoPageRoute(builder: (_) => WatchlistMoviesPage());
-            case AboutPage.ROUTE_NAME:
+            case aboutRoutes:
               return CupertinoPageRoute(builder: (_) => AboutPage());
-            case HomeTVPage.ROUTE_NAME:
+            case tvRoutes:
               return CupertinoPageRoute(
                 builder: (context) => HomeTVPage(),
               );
-            case PopularTVPage.ROUTE_NAME:
+            case popularTVRoutes:
               return CupertinoPageRoute(
                 builder: (_) => PopularTVPage(),
               );
-            case TopRatedTVPage.ROUTE_NAME:
+            case topRatedTVRoutes:
               return CupertinoPageRoute(
                 builder: (context) => TopRatedTVPage(),
               );
-            case TVDetailPage.ROUTE_NAME:
+            case tvDetailRoutes:
               final id = settings.arguments as int;
               return CupertinoPageRoute(
                 builder: (_) => TVDetailPage(id: id),
                 settings: settings,
               );
-            case SeasonDetailPage.ROUTE_NAME:
+            case seasonDetailRoutes:
               final dataMap = settings.arguments as Map;
               return CupertinoPageRoute(
                 builder: (context) => SeasonDetailPage(
@@ -154,13 +132,15 @@ class MyApp extends StatelessWidget {
                 ),
               );
             default:
-              return CupertinoPageRoute(builder: (_) {
-                return Scaffold(
-                  body: Center(
-                    child: Text('Page not found :('),
-                  ),
-                );
-              });
+              return CupertinoPageRoute(
+                builder: (_) {
+                  return Scaffold(
+                    body: Center(
+                      child: Text('Page not found :('),
+                    ),
+                  );
+                },
+              );
           }
         },
       ),
