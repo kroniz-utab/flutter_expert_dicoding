@@ -47,3 +47,5 @@ app.*.map.json
 
 # html file
 **/html/*
+
+.vscode/**

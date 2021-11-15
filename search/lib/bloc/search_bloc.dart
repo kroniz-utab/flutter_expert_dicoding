@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:core/domain/entities/movie_entities/movie.dart';
 import 'package:meta/meta.dart';
@@ -10,39 +12,28 @@ part 'search_state.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
   final SearchMovies _searchMovies;
-  SearchBloc(this._searchMovies) : super(SearchEmpty());
 
-  @override
-  Stream<SearchState> mapEventToState(SearchEvent event) async* {
-    if (event is OnQueryChange) {
-      final query = event.query;
-
-      yield SearchLoading();
-      final result = await _searchMovies.execute(query);
-
-      yield* result.fold(
-        (failure) async* {
-          yield SearchError(failure.message);
-        },
-        (data) async* {
-          if (data.isEmpty) {
-            yield SearchEmpty();
-          } else {
-            yield SearchHasData(data);
-          }
-        },
-      );
-    }
+  SearchBloc(this._searchMovies) : super(SearchEmpty()) {
+    on<OnQueryChange>(_onQueryChange);
   }
 
   @override
-  Stream<Transition<SearchEvent, SearchState>> transformEvents(
-    Stream<SearchEvent> events,
-    TransitionFunction<SearchEvent, SearchState> transitionFn,
-  ) {
-    return super.transformEvents(
-      events.debounceTime(const Duration(milliseconds: 500)),
-      transitionFn,
+  Stream<SearchState> get stream =>
+      super.stream.debounceTime(const Duration(milliseconds: 42));
+
+  FutureOr<void> _onQueryChange(
+      OnQueryChange event, Emitter<SearchState> emit) async {
+    final query = event.query;
+    emit(SearchLoading());
+    final result = await _searchMovies.execute(query);
+
+    result.fold(
+      (failure) {
+        emit(SearchError(failure.message));
+      },
+      (data) {
+        data.isEmpty ? emit(SearchEmpty()) : emit(SearchHasData(data));
+      },
     );
   }
 }
