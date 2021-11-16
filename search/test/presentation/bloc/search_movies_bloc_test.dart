@@ -1,23 +1,21 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:core/core.dart';
-import 'package:core/domain/entities/movie_entities/movie.dart';
 import 'package:dartz/dartz.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/annotations.dart';
 import 'package:mockito/mockito.dart';
-import 'package:search/bloc/search_bloc.dart';
 import 'package:search/search.dart';
 
-import 'search_bloc_test.mocks.dart';
+import 'search_movies_bloc_test.mocks.dart';
 
 @GenerateMocks([SearchMovies])
 void main() {
   late MockSearchMovies mockSearchMovies;
-  late SearchBloc searchBloc;
+  late SearchMoviesBloc searchBloc;
 
   setUp(() {
     mockSearchMovies = MockSearchMovies();
-    searchBloc = SearchBloc(mockSearchMovies);
+    searchBloc = SearchMoviesBloc(mockSearchMovies);
   });
 
   final tMovieModel = Movie(
@@ -40,55 +38,56 @@ void main() {
   const tQuery = 'spiderman';
 
   test('initial state should be empty', () {
-    expect(searchBloc.state, SearchEmpty());
+    expect(searchBloc.state, SearchMoviesEmpty());
   });
 
-  blocTest<SearchBloc, SearchState>(
+  blocTest<SearchMoviesBloc, SearchMoviesState>(
     'should emit [HasData] when data is gotten successfully',
     build: () {
       when(mockSearchMovies.execute(tQuery))
           .thenAnswer((_) async => Right(tMovieList));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChange(tQuery)),
-    wait: const Duration(milliseconds: 500),
+    act: (bloc) => bloc.add(OnQueryMoviesChange(tQuery)),
+    wait: const Duration(milliseconds: 200),
     expect: () => [
-      SearchHasData(tMovieList),
+      SearchMoviesHasData(tMovieList),
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));
-      return OnQueryChange(tQuery).props;
+      return OnQueryMoviesChange(tQuery).props;
     },
   );
 
-  blocTest<SearchBloc, SearchState>(
+  blocTest<SearchMoviesBloc, SearchMoviesState>(
     'should emit [Error] when get search is unsuccessful',
     build: () {
       when(mockSearchMovies.execute(tQuery))
           .thenAnswer((_) async => const Left(ServerFailure('Server Failure')));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChange(tQuery)),
-    wait: const Duration(milliseconds: 500),
+    act: (bloc) => bloc.add(OnQueryMoviesChange(tQuery)),
+    wait: const Duration(milliseconds: 200),
     expect: () => [
-      const SearchError('Server Failure'),
+      SearchMoviesError('Server Failure'),
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));
+      return SearchMoviesLoading().props;
     },
   );
 
-  blocTest<SearchBloc, SearchState>(
+  blocTest<SearchMoviesBloc, SearchMoviesState>(
     'should emit [Empty] when get search is empty',
     build: () {
       when(mockSearchMovies.execute(tQuery))
           .thenAnswer((_) async => const Right([]));
       return searchBloc;
     },
-    act: (bloc) => bloc.add(const OnQueryChange(tQuery)),
-    wait: const Duration(milliseconds: 500),
+    act: (bloc) => bloc.add(OnQueryMoviesChange(tQuery)),
+    wait: const Duration(milliseconds: 200),
     expect: () => [
-      SearchEmpty(),
+      SearchMoviesEmpty(),
     ],
     verify: (bloc) {
       verify(mockSearchMovies.execute(tQuery));

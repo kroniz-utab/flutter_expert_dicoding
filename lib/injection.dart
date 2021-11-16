@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:movie/movie.dart';
-import 'package:search/bloc/search_bloc.dart';
 import 'package:search/search.dart';
 import 'package:tv/tv.dart';
 import 'package:watchlist/watchlist.dart';
@@ -25,11 +24,6 @@ void init() {
       getWatchListStatus: locator(),
       saveWatchlist: locator(),
       removeWatchlist: locator(),
-    ),
-  );
-  locator.registerFactory(
-    () => MovieSearchNotifier(
-      searchMovies: locator(),
     ),
   );
   locator.registerFactory(
@@ -76,11 +70,6 @@ void init() {
     ),
   );
   locator.registerFactory(
-    () => TVSearchNotifier(
-      searchTVShows: locator(),
-    ),
-  );
-  locator.registerFactory(
     () => WatchlistTVNotifier(
       getWatchlistTVShows: locator(),
     ),
@@ -92,7 +81,8 @@ void init() {
   );
 
   // bloc
-  locator.registerFactory(() => SearchBloc(locator()));
+  locator.registerFactory(() => SearchMoviesBloc(locator()));
+  locator.registerFactory(() => SearchTvBloc(locator()));
 
   // use case
   locator.registerLazySingleton(() => GetNowPlayingMovies(locator()));

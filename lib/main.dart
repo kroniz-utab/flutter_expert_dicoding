@@ -2,7 +2,6 @@ import 'package:core/core.dart';
 import 'package:about/about_page.dart';
 import 'package:ditonton/main_page.dart';
 import 'package:ditonton/injection.dart' as di;
-import 'package:search/bloc/search_bloc.dart';
 import 'package:search/search.dart';
 import 'package:movie/movie.dart';
 import 'package:tv/tv.dart';
@@ -47,9 +46,6 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<WatchlistTVNotifier>(
           create: (context) => di.locator<WatchlistTVNotifier>(),
         ),
-        ChangeNotifierProvider<TVSearchNotifier>(
-          create: (context) => di.locator<TVSearchNotifier>(),
-        ),
         ChangeNotifierProvider<PopularTVNotifier>(
           create: (context) => di.locator<PopularTVNotifier>(),
         ),
@@ -61,7 +57,10 @@ class MyApp extends StatelessWidget {
         ),
         // bloc
         BlocProvider(
-          create: (context) => di.locator<SearchBloc>(),
+          create: (context) => di.locator<SearchMoviesBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<SearchTvBloc>(),
         ),
       ],
       child: MaterialApp(
