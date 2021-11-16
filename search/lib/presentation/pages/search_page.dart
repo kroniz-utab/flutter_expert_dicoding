@@ -135,6 +135,7 @@ class SearchPage extends StatelessWidget {
                       isWatchlist: false,
                     );
                   },
+                  itemCount: result.length,
                 ),
               );
             } else if (state is SearchTvError) {
