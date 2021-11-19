@@ -1,0 +1,26 @@
+{
+    "page": 1,
+    "results": [
+        {
+            "backdrop_path": "/34OGjFEbHj0E3lE2w0iTUVq0CBz.jpg",
+            "first_air_date": "2020-10-23",
+            "genre_ids": [
+                18
+            ],
+            "id": 87739,
+            "name": "The Queen's Gambit",
+            "origin_country": [
+                "US"
+            ],
+            "original_language": "en",
+            "original_name": "The Queen's Gambit",
+            "overview": "In a Kentucky orphanage in the 1950s, a young girl discovers an astonishing talent for chess while struggling with addiction.",
+            "popularity": 109.212,
+            "poster_path": "/zU0htwkhNvBQdVSIKB9s6hgVeFK.jpg",
+            "vote_average": 8.7,
+            "vote_count": 2236
+        }
+    ],
+    "total_pages": 1,
+    "total_results": 3
+}
