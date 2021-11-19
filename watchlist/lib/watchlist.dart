@@ -12,9 +12,9 @@ export 'domain/usecase/tv_usecases/get_watchlist_tvshow.dart';
 export 'domain/usecase/tv_usecases/remove_tv_watchlist.dart';
 export 'domain/usecase/tv_usecases/save_tv_watchlist.dart';
 
-/// provider
-export 'presentation/provider/watchlist_movie_notifier.dart';
-export 'presentation/provider/watchlist_tv_notifier.dart';
-
 /// pages
 export 'presentation/pages/watchlist_page.dart';
+
+/// bloc
+export 'presentation/bloc/movies/movie_watchlist_bloc.dart';
+export 'presentation/bloc/tvShow/tv_watchlist_bloc.dart';

@@ -3,9 +3,9 @@
 import 'package:core/core.dart';
 import 'package:core/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../provider/watchlist_movie_notifier.dart';
-import '../provider/watchlist_tv_notifier.dart';
+import 'package:watchlist/watchlist.dart';
 
 class WatchlistMoviesPage extends StatefulWidget {
   const WatchlistMoviesPage({Key? key}) : super(key: key);
@@ -19,12 +19,10 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        Provider.of<WatchlistMovieNotifier>(context, listen: false)
-            .fetchWatchlistMovies());
-    Future.microtask(() =>
-        Provider.of<WatchlistTVNotifier>(context, listen: false)
-            .fetchWatchlistTVShow());
+    Future.microtask(() {
+      context.read<MovieWatchlistBloc>().add(OnFetchMovieWatchlist());
+      context.read<TvWatchlistBloc>().add(OnFetchTvWatchlist());
+    });
   }
 
   @override
@@ -35,10 +33,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
 
   @override
   void didPopNext() {
-    Provider.of<WatchlistMovieNotifier>(context, listen: false)
-        .fetchWatchlistMovies();
-    Provider.of<WatchlistTVNotifier>(context, listen: false)
-        .fetchWatchlistTVShow();
+    context.read<MovieWatchlistBloc>().add(OnFetchMovieWatchlist());
+    context.read<TvWatchlistBloc>().add(OnFetchTvWatchlist());
   }
 
   @override
@@ -56,64 +52,74 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  Consumer<WatchlistMovieNotifier>(
-                    builder: (context, data, child) {
-                      if (data.watchlistState == RequestState.Loading) {
+                  BlocBuilder<MovieWatchlistBloc, MovieWatchlistState>(
+                    builder: (context, state) {
+                      if (state is MovieWatchlistLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (data.watchlistState == RequestState.Empty) {
+                      } else if (state is MovieWatchlistEmpty) {
                         return SizedBox();
-                      } else if (data.watchlistState == RequestState.Loaded) {
+                      } else if (state is MovieWatchlistHasData) {
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            final movie = data.watchlistMovies[index];
+                            final movie = state.result[index];
                             return MovieCard(
                               movie: movie,
                               isWatchlist: true,
                             );
                           },
-                          itemCount: data.watchlistMovies.length,
+                          itemCount: state.result.length,
+                        );
+                      } else if (state is MovieWatchlistError) {
+                        return Center(
+                          key: Key('error_message'),
+                          child: Text(state.message),
                         );
                       } else {
                         return Center(
                           key: Key('error_message'),
-                          child: Text(data.message),
+                          child: Text('Error!'),
                         );
                       }
                     },
                   ),
-                  Consumer<WatchlistTVNotifier>(
-                    builder: (context, data, child) {
-                      if (data.watchlistState == RequestState.Loading) {
+                  BlocBuilder<TvWatchlistBloc, TvWatchlistState>(
+                    builder: (context, state) {
+                      if (state is TvWatchlistLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (data.watchlistState == RequestState.Empty) {
+                      } else if (state is TvWatchlistEmpty) {
                         return SizedBox();
-                      } else if (data.watchlistState == RequestState.Loaded) {
+                      } else if (state is TvWatchlistHasData) {
                         return ListView.builder(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (context, index) {
-                            final tv = data.watchlistTVShow[index];
+                            final tv = state.result[index];
                             return TVShowCard(
                               tv: tv,
                               isWatchlist: true,
                             );
                           },
-                          itemCount: data.watchlistTVShow.length,
+                          itemCount: state.result.length,
+                        );
+                      } else if (state is TvWatchlistError) {
+                        return Center(
+                          key: Key('error_message'),
+                          child: Text(state.message),
                         );
                       } else {
                         return Center(
                           key: Key('error_message'),
-                          child: Text(data.message),
+                          child: Text('Error!'),
                         );
                       }
                     },
-                  ),
+                  )
                 ],
               ),
             ),

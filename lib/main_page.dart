@@ -5,6 +5,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:core/core.dart';
 import 'package:core/styles/text_styles.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:movie/movie.dart';
 import 'package:provider/provider.dart';
 import 'package:tv/tv.dart';
@@ -20,14 +21,19 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<MovieListNotifier>(context, listen: false)
-        ..fetchNowPlayingMovies()
-        ..fetchPopularMovies(),
-    );
     Future.microtask(() => Provider.of<TVListNotifier>(context, listen: false)
       ..fetchTVOnTheAir()
       ..fetchPopularTVShows());
+    Future.microtask(
+      () {
+        BlocProvider.of<MovieListBloc>(context, listen: false).add(
+          OnMovieListCalled(),
+        );
+        BlocProvider.of<MoviePopularBloc>(context, listen: false).add(
+          OnMoviePopularCalled(),
+        );
+      },
+    );
   }
 
   @override
@@ -62,16 +68,33 @@ class _MainPageState extends State<MainPage> {
                     style: kHeading6,
                   ),
                   SizedBox(height: 10),
-                  Consumer<MovieListNotifier>(
-                    builder: (context, data, child) {
-                      final state = data.nowPlayingState;
-                      if (state == RequestState.Loading) {
+                  BlocBuilder<MovieListBloc, MovieListState>(
+                    builder: (context, state) {
+                      if (state is MovieListLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        final listMovies = data.nowPlayingMovies;
+                      } else if (state is MovieListEmpty) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text('No one movie is playing'),
+                            ),
+                          ),
+                        );
+                      } else if (state is MovieListHasData) {
+                        final listMovies = state.result;
                         return _buildMoviesCarousel(listMovies);
+                      } else if (state is MovieListError) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          ),
+                        );
                       } else {
                         return Text('Failed');
                       }
@@ -88,16 +111,33 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                   SizedBox(height: 10),
-                  Consumer<MovieListNotifier>(
-                    builder: (context, data, child) {
-                      final state = data.nowPlayingState;
-                      if (state == RequestState.Loading) {
+                  BlocBuilder<MoviePopularBloc, MoviePopularState>(
+                    builder: (context, state) {
+                      if (state is MoviePopularLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        final listMovies = data.nowPlayingMovies;
+                      } else if (state is MoviePopularEmpty) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text('No one popular movies'),
+                            ),
+                          ),
+                        );
+                      } else if (state is MoviePopularHasData) {
+                        final listMovies = state.result;
                         return MovieList(listMovies);
+                      } else if (state is MoviePopularError) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          ),
+                        );
                       } else {
                         return Text('Failed');
                       }
