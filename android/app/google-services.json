@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "240138540389",
+    "project_id": "ditonton-fb-base",
+    "storage_bucket": "ditonton-fb-base.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:240138540389:android:2157bc39c010d2efb23d8c",
+        "android_client_info": {
+          "package_name": "com.dicoding.ditonton.submission.ade"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "240138540389-q6fd5d2ckarrmuul5msijfokindr708a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDGTzGggczDku0zmNDF45eFf373TQTnckY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "240138540389-q6fd5d2ckarrmuul5msijfokindr708a.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
