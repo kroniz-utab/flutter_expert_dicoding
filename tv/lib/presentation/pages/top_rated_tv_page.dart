@@ -2,8 +2,9 @@
 
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import '../provider/top_rated_tv_notifier.dart';
+import 'package:tv/tv.dart';
 
 class TopRatedTVPage extends StatefulWidget {
   const TopRatedTVPage({Key? key}) : super(key: key);
@@ -17,8 +18,7 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
   void initState() {
     super.initState();
     Future.microtask(
-      () => Provider.of<TopRatedTVNotifier>(context, listen: false)
-          .fetchTopRatedTVShows(),
+      () => context.read<TvTopRatedBloc>().add(OnTvTopRatedCalled()),
     );
   }
 
@@ -30,28 +30,37 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Consumer<TopRatedTVNotifier>(
-          builder: (context, data, child) {
-            if (data.state == RequestState.Loading) {
+        child: BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+          builder: (context, state) {
+            if (state is TvTopRatedLoading) {
               return Center(
                 child: CircularProgressIndicator(),
               );
-            } else if (data.state == RequestState.Loaded) {
+            } else if (state is TvTopRatedHasData) {
               return ListView.builder(
                 itemBuilder: (context, index) {
-                  final tvShow = data.tvList[index];
+                  final tv = state.result[index];
                   return TVShowCard(
-                    tv: tvShow,
+                    tv: tv,
                     isWatchlist: false,
                   );
                 },
-                itemCount: data.tvList.length,
+                itemCount: state.result.length,
+              );
+            } else if (state is TvTopRatedError) {
+              return Expanded(
+                child: Center(
+                  child: Text(state.message),
+                ),
+              );
+            } else if (state is TvTopRatedEmpty) {
+              return Expanded(
+                child: Center(
+                  child: Text('There are no one top rated tv show'),
+                ),
               );
             } else {
-              return Center(
-                child: Text(data.message),
-                key: Key('error_message'),
-              );
+              return SizedBox();
             }
           },
         ),

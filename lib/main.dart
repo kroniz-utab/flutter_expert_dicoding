@@ -10,7 +10,6 @@ import 'package:watchlist/watchlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 void main() async {
@@ -23,23 +22,8 @@ void main() async {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MultiProvider(
+    return MultiBlocProvider(
       providers: [
-        ChangeNotifierProvider(
-          create: (_) => di.locator<TVListNotifier>(),
-        ),
-        ChangeNotifierProvider<TvDetailNotifier>(
-          create: (context) => di.locator<TvDetailNotifier>(),
-        ),
-        ChangeNotifierProvider<PopularTVNotifier>(
-          create: (context) => di.locator<PopularTVNotifier>(),
-        ),
-        ChangeNotifierProvider<TopRatedTVNotifier>(
-          create: (context) => di.locator<TopRatedTVNotifier>(),
-        ),
-        ChangeNotifierProvider<TVSeasonNotifier>(
-          create: (context) => di.locator<TVSeasonNotifier>(),
-        ),
         // bloc
         // search bloc
         BlocProvider(
@@ -70,6 +54,28 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => di.locator<MovieDetailBloc>(),
+        ),
+        // tv bloc
+        BlocProvider(
+          create: (context) => di.locator<TvListBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvDetailBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvPopularBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvRecommendationBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvSimilarBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvTopRatedBloc>(),
+        ),
+        BlocProvider(
+          create: (context) => di.locator<TvSeasonDetailBloc>(),
         ),
       ],
       child: MaterialApp(

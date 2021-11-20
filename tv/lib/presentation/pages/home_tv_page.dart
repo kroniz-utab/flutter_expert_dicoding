@@ -2,8 +2,9 @@
 
 import 'package:core/core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
-import 'package:tv/presentation/provider/tv_list_notifier.dart';
+import 'package:tv/tv.dart';
 
 class HomeTVPage extends StatefulWidget {
   const HomeTVPage({Key? key}) : super(key: key);
@@ -16,12 +17,11 @@ class _HomeTVPageState extends State<HomeTVPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(
-      () => Provider.of<TVListNotifier>(context, listen: false)
-        ..fetchTVOnTheAir()
-        ..fetchPopularTVShows()
-        ..fetchTopRatedTVShows(),
-    );
+    Future.microtask(() {
+      context.read<TvListBloc>().add(OnTvShowListCalled());
+      context.read<TvPopularBloc>().add(OnTvPopularCalled());
+      context.read<TvTopRatedBloc>().add(OnTvTopRatedCalled());
+    });
   }
 
   @override
@@ -56,66 +56,93 @@ class _HomeTVPageState extends State<HomeTVPage> {
                     'On The Air',
                     style: kHeading6,
                   ),
-                  Consumer<TVListNotifier>(builder: (context, data, child) {
-                    final state = data.tvOnTheAirState;
-                    if (state == RequestState.Loading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state == RequestState.Loaded) {
-                      return TVListLayout(
-                        tv: data.tvOnTheAir,
-                        height: 200,
-                        isReplacement: false,
-                      );
-                    } else {
-                      return Text('Failed');
-                    }
-                  }),
+                  BlocBuilder<TvListBloc, TvListState>(
+                    builder: (context, state) {
+                      if (state is TvListLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is TvListHasData) {
+                        return TVListLayout(
+                          tv: state.result,
+                          height: 200,
+                          isReplacement: false,
+                        );
+                      } else if (state is TvListEmpty) {
+                        return Center(
+                          child: Text('There are no tv currently showing'),
+                        );
+                      } else if (state is TvListError) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
                   _buildSubHeading(
                     title: 'Popular TV Shows',
                     onTap: () {
                       Navigator.pushNamed(context, popularTVRoutes);
                     },
                   ),
-                  Consumer<TVListNotifier>(builder: (context, data, child) {
-                    final state = data.popularTVShowsState;
-                    if (state == RequestState.Loading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state == RequestState.Loaded) {
-                      return TVListLayout(
-                        tv: data.popularTVShows,
-                        height: 200,
-                        isReplacement: false,
-                      );
-                    } else {
-                      return Text('Failed');
-                    }
-                  }),
+                  BlocBuilder<TvPopularBloc, TvPopularState>(
+                    builder: (context, state) {
+                      if (state is TvPopularLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is TvPopularHasData) {
+                        return TVListLayout(
+                          tv: state.result,
+                          height: 200,
+                          isReplacement: false,
+                        );
+                      } else if (state is TvPopularEmpty) {
+                        return Center(
+                          child: Text('There are no tv popular showing'),
+                        );
+                      } else if (state is TvPopularError) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
                   _buildSubHeading(
                     title: 'Top Rated',
                     onTap: () {
                       Navigator.pushNamed(context, topRatedTVRoutes);
                     },
                   ),
-                  Consumer<TVListNotifier>(builder: (context, data, child) {
-                    final state = data.topRatedTVShowsState;
-                    if (state == RequestState.Loading) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else if (state == RequestState.Loaded) {
-                      return TVListLayout(
-                        tv: data.topRatedTVShows,
-                        height: 200,
-                        isReplacement: false,
-                      );
-                    } else {
-                      return Text('Failed');
-                    }
-                  }),
+                  BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+                    builder: (context, state) {
+                      if (state is TvTopRatedLoading) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else if (state is TvTopRatedHasData) {
+                        return TVListLayout(
+                          tv: state.result,
+                          height: 200,
+                          isReplacement: false,
+                        );
+                      } else if (state is TvTopRatedEmpty) {
+                        return Center(
+                          child: Text('There are no tv top rated showing'),
+                        );
+                      } else if (state is TvTopRatedError) {
+                        return Center(
+                          child: Text(state.message),
+                        );
+                      } else {
+                        return SizedBox();
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

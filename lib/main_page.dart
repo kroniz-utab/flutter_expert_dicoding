@@ -21,19 +21,12 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() => Provider.of<TVListNotifier>(context, listen: false)
-      ..fetchTVOnTheAir()
-      ..fetchPopularTVShows());
-    Future.microtask(
-      () {
-        BlocProvider.of<MovieListBloc>(context, listen: false).add(
-          OnMovieListCalled(),
-        );
-        BlocProvider.of<MoviePopularBloc>(context, listen: false).add(
-          OnMoviePopularCalled(),
-        );
-      },
-    );
+    Future.microtask(() {
+      context.read<MovieListBloc>().add(OnMovieListCalled());
+      context.read<MoviePopularBloc>().add(OnMoviePopularCalled());
+      context.read<TvListBloc>().add(OnTvShowListCalled());
+      context.read<TvPopularBloc>().add(OnTvPopularCalled());
+    });
   }
 
   @override
@@ -148,16 +141,33 @@ class _MainPageState extends State<MainPage> {
                     style: kHeading6,
                   ),
                   SizedBox(height: 10),
-                  Consumer<TVListNotifier>(
-                    builder: (context, data, child) {
-                      final state = data.tvOnTheAirState;
-                      if (state == RequestState.Loading) {
+                  BlocBuilder<TvListBloc, TvListState>(
+                    builder: (context, state) {
+                      if (state is TvListLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        final listTV = data.tvOnTheAir;
-                        return _buildTVCarousel(listTV);
+                      } else if (state is TvListEmpty) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text('No one tv show is playing'),
+                            ),
+                          ),
+                        );
+                      } else if (state is TvListHasData) {
+                        final listTv = state.result;
+                        return _buildTVCarousel(listTv);
+                      } else if (state is TvListError) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          ),
+                        );
                       } else {
                         return Text('Failed');
                       }
@@ -174,19 +184,36 @@ class _MainPageState extends State<MainPage> {
                     },
                   ),
                   SizedBox(height: 10),
-                  Consumer<TVListNotifier>(
-                    builder: (context, data, child) {
-                      final state = data.tvOnTheAirState;
-                      if (state == RequestState.Loading) {
+                  BlocBuilder<TvPopularBloc, TvPopularState>(
+                    builder: (context, state) {
+                      if (state is TvPopularLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state == RequestState.Loaded) {
-                        final listTV = data.tvOnTheAir;
+                      } else if (state is TvPopularEmpty) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text('No one popular tv show'),
+                            ),
+                          ),
+                        );
+                      } else if (state is TvPopularHasData) {
+                        final listTv = state.result;
                         return TVListLayout(
-                          tv: listTV,
+                          tv: listTv,
                           height: 200,
                           isReplacement: false,
+                        );
+                      } else if (state is TvPopularError) {
+                        return Expanded(
+                          child: Container(
+                            height: 200,
+                            child: Center(
+                              child: Text(state.message),
+                            ),
+                          ),
                         );
                       } else {
                         return Text('Failed');
