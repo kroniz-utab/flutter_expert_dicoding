@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:search/search.dart';
 
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class SearchPage extends StatelessWidget {
   final bool isMovieSearch;
