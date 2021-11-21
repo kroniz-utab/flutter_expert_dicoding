@@ -3,16 +3,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-
-import '../../../utils/exception.dart';
-import '../../../utils/failure.dart';
-import '../../../data/datasources/tv_local_data_source.dart';
-import '../../../data/datasources/tv_remote_data_source.dart';
-import '../../../data/models/tv_models/tv_table.dart';
-import '../../../domain/entities/tv_entities/season_detail.dart';
-import '../../../domain/entities/tv_entities/tv.dart';
-import '../../../domain/entities/tv_entities/tv_detail.dart';
-import '../../../domain/repositories/tv_repository.dart';
+import 'package:core/core.dart';
 
 class TVRepositoryImpl implements TVRepository {
   final TVLocalDataSource localDataSource;
@@ -32,6 +23,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -44,6 +39,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -58,6 +57,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -70,6 +73,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -82,6 +89,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -94,6 +105,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -142,6 +157,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -155,6 +174,10 @@ class TVRepositoryImpl implements TVRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 }

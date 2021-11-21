@@ -1,11 +1,12 @@
 import 'dart:convert';
 
+import 'package:http/io_client.dart';
+
 import '../../utils/exception.dart';
 import '../../data/models/tv_models/season_detail_model.dart';
 import '../../data/models/tv_models/tv_detail_model.dart';
 import '../../data/models/tv_models/tv_model.dart';
 import '../../data/models/tv_models/tv_response.dart';
-import 'package:http/http.dart' as http;
 
 abstract class TVRemoteDataSource {
   Future<List<TVModel>> getTVOnTheAir();
@@ -22,7 +23,7 @@ class TVRemoteDataSourceImpl implements TVRemoteDataSource {
   static const API_KEY = 'api_key=2174d146bb9c0eab47529b2e77d6b526';
   static const BASE_URL = 'https://api.themoviedb.org/3';
 
-  final http.Client client;
+  final IOClient client;
 
   TVRemoteDataSourceImpl({required this.client});
 

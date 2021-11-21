@@ -1,14 +1,16 @@
 import 'package:core/core.dart';
-import 'package:http/http.dart' as http;
 import 'package:get_it/get_it.dart';
 import 'package:movie/movie.dart';
 import 'package:search/search.dart';
 import 'package:tv/tv.dart';
 import 'package:watchlist/watchlist.dart';
+import 'package:http/io_client.dart';
 
 final locator = GetIt.instance;
 
-void init() {
+Future init() async {
+  IOClient ioClient = await SSLPinning.ioClient;
+
   // bloc
   // search bloc
   locator.registerFactory(() => SearchMoviesBloc(locator()));
@@ -87,7 +89,7 @@ void init() {
 
   // data sources
   locator.registerLazySingleton<MovieRemoteDataSource>(
-      () => MovieRemoteDataSourceImpl(client: locator()));
+      () => MovieRemoteDataSourceImpl(ioClient: locator()));
   locator.registerLazySingleton<MovieLocalDataSource>(
       () => MovieLocalDataSourceImpl(databaseHelper: locator()));
 
@@ -100,5 +102,5 @@ void init() {
   locator.registerLazySingleton<DatabaseHelper>(() => DatabaseHelper());
 
   // external
-  locator.registerLazySingleton(() => http.Client());
+  locator.registerLazySingleton(() => ioClient);
 }

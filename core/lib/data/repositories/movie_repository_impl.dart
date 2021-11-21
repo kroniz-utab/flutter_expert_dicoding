@@ -3,14 +3,7 @@
 import 'dart:io';
 
 import 'package:dartz/dartz.dart';
-import '../../data/datasources/movie_local_data_source.dart';
-import '../../data/datasources/movie_remote_data_source.dart';
-import '../../data/models/movie_models/movie_table.dart';
-import '../../domain/entities/movie_entities/movie.dart';
-import '../../domain/entities/movie_entities/movie_detail.dart';
-import '../../domain/repositories/movie_repository.dart';
-import '../../utils/exception.dart';
-import '../../utils/failure.dart';
+import 'package:core/core.dart';
 
 class MovieRepositoryImpl implements MovieRepository {
   final MovieRemoteDataSource remoteDataSource;
@@ -32,6 +25,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -44,6 +41,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -56,6 +57,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -68,6 +73,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -80,6 +89,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 
@@ -92,6 +105,10 @@ class MovieRepositoryImpl implements MovieRepository {
       return Left(ServerFailure(''));
     } on SocketException {
       return Left(ConnectionFailure('Failed to connect to the network'));
+    } on TlsException catch (e) {
+      return Left(CommonFailure('Certificate not valid ${e.message}'));
+    } catch (e) {
+      return Left(CommonFailure(e.toString()));
     }
   }
 

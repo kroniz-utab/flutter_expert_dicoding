@@ -78,3 +78,6 @@ export 'presentation/widgets/movie_list.dart';
 export 'presentation/widgets/seasons_list.dart';
 export 'presentation/widgets/tv_card_list.dart';
 export 'presentation/widgets/tv_list.dart';
+
+/// ssl pinning
+export 'data/datasources/ssl/ssl_pinning.dart';
