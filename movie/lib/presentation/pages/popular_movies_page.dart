@@ -16,9 +16,8 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
   @override
   void initState() {
     super.initState();
-    Future.microtask(() =>
-        BlocProvider.of<MoviePopularBloc>(context, listen: false)
-            .add(OnMoviePopularCalled()));
+    Future.microtask(
+        () => context.read<MoviePopularBloc>().add(OnMoviePopularCalled()));
   }
 
   @override
@@ -30,6 +29,7 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<MoviePopularBloc, MoviePopularState>(
+          key: Key('this_is_popular_page'),
           builder: (context, state) {
             if (state is MoviePopularLoading) {
               return Center(
@@ -40,12 +40,13 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                 itemBuilder: (context, index) {
                   final movie = state.result[index];
                   return MovieCard(
+                    key: Key('card_$index'),
                     movie: movie,
                     isWatchlist: false,
                     onTap: () {
                       Navigator.pushNamed(
                         context,
-                        tvDetailRoutes,
+                        movieDetailRoutes,
                         arguments: movie.id,
                       );
                     },
@@ -54,19 +55,19 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                 itemCount: state.result.length,
               );
             } else if (state is MoviePopularError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else if (state is MoviePopularEmpty) {
-              return Expanded(
-                child: Center(
-                  child: Text('There are no one popular movie'),
+              return Center(
+                child: Text(
+                  state.message,
+                  key: Key('error_message'),
                 ),
               );
             } else {
-              return SizedBox();
+              return Center(
+                child: Text(
+                  'There are no one popular movie',
+                  key: Key('empty_data'),
+                ),
+              );
             }
           },
         ),

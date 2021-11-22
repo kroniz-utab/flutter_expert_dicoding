@@ -30,6 +30,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<MovieTopRatedBloc, MovieTopRatedState>(
+          key: Key('this_is_top_rated'),
           builder: (context, state) {
             if (state is MovieTopRatedLoading) {
               return Center(
@@ -40,6 +41,7 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                 itemBuilder: (context, index) {
                   final movie = state.result[index];
                   return MovieCard(
+                    key: Key('card_$index'),
                     movie: movie,
                     isWatchlist: false,
                     onTap: () {
@@ -54,19 +56,19 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                 itemCount: state.result.length,
               );
             } else if (state is MovieTopRatedError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else if (state is MovieTopRatedEmpty) {
-              return Expanded(
-                child: Center(
-                  child: Text('There are no one top rated movie'),
+              return Center(
+                child: Text(
+                  state.message,
+                  key: Key('error_message'),
                 ),
               );
             } else {
-              return SizedBox();
+              return Center(
+                child: Text(
+                  'There are no one top rated movie',
+                  key: Key('empty_data'),
+                ),
+              );
             }
           },
         ),

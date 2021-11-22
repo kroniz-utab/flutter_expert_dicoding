@@ -37,6 +37,7 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             : false);
     return Scaffold(
       body: BlocBuilder<MovieDetailBloc, MovieDetailState>(
+        key: Key('this_is_detail'),
         builder: (context, state) {
           if (state is MovieDetailLoading) {
             return Center(
@@ -50,16 +51,20 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
                 isAddedToWatchlist,
               ),
             );
-          } else if (state is MovieDetailEmpty) {
-            return Center(
-              child: Text('Detail is empty'),
-            );
           } else if (state is MovieDetailError) {
             return Center(
-              child: Text(state.message),
+              child: Text(
+                state.message,
+                key: Key('error_message'),
+              ),
             );
           } else {
-            return SizedBox();
+            return Center(
+              child: Text(
+                'Detail is empty',
+                key: Key('empty_message'),
+              ),
+            );
           }
         },
       ),
@@ -135,18 +140,15 @@ class _DetailContentState extends State<DetailContent> {
                                       RemoveMovieFromWatchlist(widget.movie));
                                 }
 
-                                final message = context.select<
-                                    MovieWatchlistBloc,
-                                    String>((value) => (value.state
-                                        is MovieIsAddedToWatchlist)
-                                    ? (value.state as MovieIsAddedToWatchlist)
-                                                .isAdded ==
-                                            false
-                                        ? messageWatchlistAddSuccess
-                                        : messageWatchlistRemoveSuccess
-                                    : !widget.isAddedWatchlist
-                                        ? messageWatchlistAddSuccess
-                                        : messageWatchlistRemoveSuccess);
+                                final message =
+                                    context.select<MovieWatchlistBloc, String>(
+                                  (value) =>
+                                      (value.state as MovieIsAddedToWatchlist)
+                                                  .isAdded ==
+                                              false
+                                          ? messageWatchlistAddSuccess
+                                          : messageWatchlistRemoveSuccess,
+                                );
 
                                 if (message == messageWatchlistAddSuccess ||
                                     message == messageWatchlistRemoveSuccess) {
@@ -155,15 +157,6 @@ class _DetailContentState extends State<DetailContent> {
                                       content: Text(message),
                                       duration: Duration(seconds: 1),
                                     ),
-                                  );
-                                } else {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return AlertDialog(
-                                        content: Text(message),
-                                      );
-                                    },
                                   );
                                 }
 
@@ -217,6 +210,7 @@ class _DetailContentState extends State<DetailContent> {
                             ),
                             BlocBuilder<MovieRecommendationBloc,
                                 MovieRecommendationState>(
+                              key: Key('this_is_recom'),
                               builder: (context, state) {
                                 if (state is MovieRecommendationLoading) {
                                   return Center(
@@ -226,15 +220,16 @@ class _DetailContentState extends State<DetailContent> {
                                     is MovieRecommendationHasData) {
                                   return _buildDetail(state.result);
                                 } else if (state is MovieRecommendationError) {
-                                  return Expanded(
-                                    child: Center(
-                                      child: Text(state.message),
+                                  return Center(
+                                    child: Text(
+                                      state.message,
+                                      key: Key('recom_error'),
                                     ),
                                   );
-                                } else if (state is MovieRecommendationEmpty) {
-                                  return SizedBox();
                                 } else {
-                                  return SizedBox();
+                                  return SizedBox(
+                                    key: Key('recom_empty'),
+                                  );
                                 }
                               },
                             )
