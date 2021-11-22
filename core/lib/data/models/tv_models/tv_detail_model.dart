@@ -95,10 +95,8 @@ class TvDetailResponse extends Equatable {
         nextEpisodeToAir: json["next_episode_to_air"] != null
             ? TEpisodeToAirModel.fromJson(json["next_episode_to_air"])
             : json["next_episode_to_air"],
-        networks: json["networks"] != null
-            ? List<NetworkModel>.from(
-                json["networks"].map((x) => NetworkModel.fromJson(x)))
-            : json["networks"],
+        networks: List<NetworkModel>.from(
+            json["networks"].map((x) => NetworkModel.fromJson(x))),
         numberOfEpisodes: json["number_of_episodes"],
         numberOfSeasons: json["number_of_seasons"],
         originCountry: List<String>.from(json["origin_country"].map((x) => x)),
@@ -109,18 +107,13 @@ class TvDetailResponse extends Equatable {
         posterPath: json["poster_path"],
         productionCompanies: List<NetworkModel>.from(
             json["production_companies"].map((x) => NetworkModel.fromJson(x))),
-        productionCountries: json["production_countries"] != null
-            ? List<ProductionCountryModel>.from(json["production_countries"]
-                .map((x) => ProductionCountryModel.fromJson(x)))
-            : json["production_countries"],
-        seasons: json["seasons"] != null
-            ? List<SeasonModel>.from(
-                json["seasons"].map((x) => SeasonModel.fromJson(x)))
-            : json["seasons"],
-        spokenLanguages: json["spoken_languages"] != null
-            ? List<SpokenLanguageModel>.from(json["spoken_languages"]
-                .map((x) => SpokenLanguageModel.fromJson(x)))
-            : json["spoken_languages"],
+        productionCountries: List<ProductionCountryModel>.from(
+            json["production_countries"]
+                .map((x) => ProductionCountryModel.fromJson(x))),
+        seasons: List<SeasonModel>.from(
+            json["seasons"].map((x) => SeasonModel.fromJson(x))),
+        spokenLanguages: List<SpokenLanguageModel>.from(json["spoken_languages"]
+            .map((x) => SpokenLanguageModel.fromJson(x))),
         status: json["status"],
         tagline: json["tagline"],
         type: json["type"],

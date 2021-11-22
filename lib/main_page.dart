@@ -31,6 +31,7 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     return Material(
+      key: Key('main_page'),
       child: CustomDrawer(
         location: mainRoutes,
         content: Scaffold(
@@ -67,24 +68,22 @@ class _MainPageState extends State<MainPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is MovieListEmpty) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text('No one movie is playing'),
-                            ),
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one movie is playing'),
                           ),
                         );
                       } else if (state is MovieListHasData) {
                         final listMovies = state.result;
                         return _buildMoviesCarousel(listMovies);
                       } else if (state is MovieListError) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text(state.message),
-                            ),
+                        return Container(
+                          key: Key('data_error'),
+                          height: 200,
+                          child: Center(
+                            child: Text(state.message),
                           ),
                         );
                       } else {
@@ -110,24 +109,41 @@ class _MainPageState extends State<MainPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is MoviePopularEmpty) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text('No one popular movies'),
-                            ),
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one popular movies'),
                           ),
                         );
                       } else if (state is MoviePopularHasData) {
-                        final listMovies = state.result;
-                        return MovieList(listMovies);
+                        final listMovie = state.result;
+                        return SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final movie = listMovie[index];
+                              return MovieList(
+                                movies: movie,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    movieDetailRoutes,
+                                    arguments: movie.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listMovie.length,
+                          ),
+                        );
                       } else if (state is MoviePopularError) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text(state.message),
-                            ),
+                        return Container(
+                          key: Key('data_error'),
+                          height: 200,
+                          child: Center(
+                            child: Text(state.message),
                           ),
                         );
                       } else {
@@ -147,24 +163,22 @@ class _MainPageState extends State<MainPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is TvListEmpty) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text('No one tv show is playing'),
-                            ),
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one tv show is playing'),
                           ),
                         );
                       } else if (state is TvListHasData) {
                         final listTv = state.result;
                         return _buildTVCarousel(listTv);
                       } else if (state is TvListError) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text(state.message),
-                            ),
+                        return Container(
+                          key: Key('data_error'),
+                          height: 200,
+                          child: Center(
+                            child: Text(state.message),
                           ),
                         );
                       } else {
@@ -190,28 +204,41 @@ class _MainPageState extends State<MainPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is TvPopularEmpty) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text('No one popular tv show'),
-                            ),
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one popular tv show'),
                           ),
                         );
                       } else if (state is TvPopularHasData) {
                         final listTv = state.result;
-                        return TVListLayout(
-                          tv: listTv,
+                        return SizedBox(
                           height: 200,
-                          isReplacement: false,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final tv = listTv[index];
+                              return TVListLayout(
+                                tv: tv,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    tvDetailRoutes,
+                                    arguments: tv.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listTv.length,
+                          ),
                         );
                       } else if (state is TvPopularError) {
-                        return Expanded(
-                          child: Container(
-                            height: 200,
-                            child: Center(
-                              child: Text(state.message),
-                            ),
+                        return Container(
+                          key: Key('data_error'),
+                          height: 200,
+                          child: Center(
+                            child: Text(state.message),
                           ),
                         );
                       } else {

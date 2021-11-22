@@ -42,6 +42,13 @@ class _PopularMoviesPageState extends State<PopularMoviesPage> {
                   return MovieCard(
                     movie: movie,
                     isWatchlist: false,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        tvDetailRoutes,
+                        arguments: movie.id,
+                      );
+                    },
                   );
                 },
                 itemCount: state.result.length,

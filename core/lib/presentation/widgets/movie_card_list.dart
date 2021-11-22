@@ -3,18 +3,20 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../utils/constants.dart';
 import '../../domain/entities/movie_entities/movie.dart';
-import '../../utils/routes.dart';
 import '../../styles/text_styles.dart';
+import '../../utils/constants.dart';
+import '../../utils/routes.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
   final bool isWatchlist;
+  final Function() onTap;
   const MovieCard({
     Key? key,
     required this.movie,
     required this.isWatchlist,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -22,13 +24,7 @@ class MovieCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            movieDetailRoutes,
-            arguments: movie.id,
-          );
-        },
+        onTap: onTap,
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [
@@ -82,7 +78,10 @@ class MovieCard extends StatelessWidget {
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(Icons.error),
+                  errorWidget: (context, url, error) => Icon(
+                    Icons.error,
+                    key: Key('error_icon'),
+                  ),
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),

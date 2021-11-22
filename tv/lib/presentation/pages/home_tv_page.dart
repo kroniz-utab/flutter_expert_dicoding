@@ -63,10 +63,26 @@ class _HomeTVPageState extends State<HomeTVPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is TvListHasData) {
-                        return TVListLayout(
-                          tv: state.result,
+                        final listTv = state.result;
+                        return SizedBox(
                           height: 200,
-                          isReplacement: false,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final tv = listTv[index];
+                              return TVListLayout(
+                                tv: tv,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    tvDetailRoutes,
+                                    arguments: tv.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listTv.length,
+                          ),
                         );
                       } else if (state is TvListEmpty) {
                         return Center(
@@ -94,10 +110,26 @@ class _HomeTVPageState extends State<HomeTVPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is TvPopularHasData) {
-                        return TVListLayout(
-                          tv: state.result,
+                        final listTv = state.result;
+                        return SizedBox(
                           height: 200,
-                          isReplacement: false,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final tv = listTv[index];
+                              return TVListLayout(
+                                tv: tv,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    tvDetailRoutes,
+                                    arguments: tv.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listTv.length,
+                          ),
                         );
                       } else if (state is TvPopularEmpty) {
                         return Center(
@@ -125,10 +157,26 @@ class _HomeTVPageState extends State<HomeTVPage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is TvTopRatedHasData) {
-                        return TVListLayout(
-                          tv: state.result,
+                        final listTv = state.result;
+                        return SizedBox(
                           height: 200,
-                          isReplacement: false,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final tv = listTv[index];
+                              return TVListLayout(
+                                tv: tv,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    tvDetailRoutes,
+                                    arguments: tv.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listTv.length,
+                          ),
                         );
                       } else if (state is TvTopRatedEmpty) {
                         return Center(

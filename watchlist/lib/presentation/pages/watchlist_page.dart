@@ -69,6 +69,13 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                             return MovieCard(
                               movie: movie,
                               isWatchlist: true,
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  movieDetailRoutes,
+                                  arguments: movie.id,
+                                );
+                              },
                             );
                           },
                           itemCount: state.result.length,
@@ -103,6 +110,13 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                             return TVShowCard(
                               tv: tv,
                               isWatchlist: true,
+                              onTap: () {
+                                Navigator.pushNamed(
+                                  context,
+                                  tvDetailRoutes,
+                                  arguments: tv.id,
+                                );
+                              },
                             );
                           },
                           itemCount: state.result.length,

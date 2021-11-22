@@ -43,6 +43,13 @@ class _PopularTVPageState extends State<PopularTVPage> {
                   return TVShowCard(
                     tv: tv,
                     isWatchlist: false,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        tvDetailRoutes,
+                        arguments: tv.id,
+                      );
+                    },
                   );
                 },
                 itemCount: state.result.length,

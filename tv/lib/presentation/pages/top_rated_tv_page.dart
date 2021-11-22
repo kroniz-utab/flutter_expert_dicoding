@@ -43,6 +43,13 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
                   return TVShowCard(
                     tv: tv,
                     isWatchlist: false,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        tvDetailRoutes,
+                        arguments: tv.id,
+                      );
+                    },
                   );
                 },
                 itemCount: state.result.length,

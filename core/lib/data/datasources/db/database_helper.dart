@@ -19,6 +19,10 @@ class DatabaseHelper {
     return _database;
   }
 
+  setDatabase(Database database) {
+    _database = database;
+  }
+
   static const String _tblMoviesWatchlist = 'movieWatchlist';
   static const String _tblTVWatchlist = 'tvWatchlist';
   static const String _tblMovieCache = 'movieCache';
@@ -84,8 +88,7 @@ class DatabaseHelper {
     });
   }
 
-  Future<List<Map<String, dynamic>>> getMoviesCacheMovies(
-      String category) async {
+  Future<List<Map<String, dynamic>>> getMoviesCache(String category) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(
       _tblMovieCache,
@@ -190,7 +193,7 @@ class DatabaseHelper {
     });
   }
 
-  Future<List<Map<String, dynamic>>> getTVCacheMovies(String category) async {
+  Future<List<Map<String, dynamic>>> getTVCache(String category) async {
     final db = await database;
     final List<Map<String, dynamic>> results = await db!.query(
       _tblTVCache,

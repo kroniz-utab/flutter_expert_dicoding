@@ -19,4 +19,8 @@ void main() {
     final result = tSpokenLangModel.toEntity();
     expect(result, tSpokenLang);
   });
+
+  test('should be check props', () {
+    expect(tSpokenLangModel, tSpokenLangModel);
+  });
 }

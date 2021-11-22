@@ -111,7 +111,7 @@ void main() {
 
     test('should return list of movies from db when data exist', () async {
       // arrange
-      when(mockDatabaseHelper.getTVCacheMovies('on the air'))
+      when(mockDatabaseHelper.getTVCache('on the air'))
           .thenAnswer((_) async => [testTVCacheMap]);
       // act
       final result = await dataSource.getCachedTVOnTheAir();
@@ -121,7 +121,7 @@ void main() {
 
     test('should throw CacheException when cache data is not exist', () async {
       // arrange
-      when(mockDatabaseHelper.getTVCacheMovies('on the air'))
+      when(mockDatabaseHelper.getTVCache('on the air'))
           .thenAnswer((_) async => []);
       // act
       final call = dataSource.getCachedTVOnTheAir();

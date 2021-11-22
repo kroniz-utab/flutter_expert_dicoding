@@ -69,7 +69,18 @@ const testTvDetail = TVDetail(
     voteCount: 5,
   ),
   name: 'name',
-  nextEpisodeToAir: null,
+  nextEpisodeToAir: TEpisodeToAir(
+    airDate: "2021-01-01",
+    episodeNumber: 12,
+    id: 44,
+    name: 'name',
+    overview: 'overview',
+    productionCode: 'productionCode',
+    seasonNumber: 1,
+    stillPath: 'stillPath',
+    voteAverage: 5.5,
+    voteCount: 5,
+  ),
   networks: [
     Network(
       name: 'name',
@@ -151,7 +162,18 @@ const testTvDetailResponse = TvDetailResponse(
     voteCount: 5,
   ),
   name: 'name',
-  nextEpisodeToAir: null,
+  nextEpisodeToAir: TEpisodeToAirModel(
+    airDate: "2021-01-01",
+    episodeNumber: 12,
+    id: 44,
+    name: 'name',
+    overview: 'overview',
+    productionCode: 'productionCode',
+    seasonNumber: 1,
+    stillPath: 'stillPath',
+    voteAverage: 5.5,
+    voteCount: 5,
+  ),
   networks: [
     NetworkModel(
       name: 'name',
@@ -200,6 +222,100 @@ const testTvDetailResponse = TvDetailResponse(
   voteAverage: 9.9,
   voteCount: 200,
 );
+
+const testTvDetailResponseMap = {
+  "backdrop_path": "backdropPath",
+  "created_by": [
+    {
+      "id": 5,
+      "credit_id": "creditId",
+      "name": "name",
+      "gender": 0,
+      "profile_path": "profilePath"
+    }
+  ],
+  "episode_run_time": [30],
+  "first_air_date": "2021-01-01",
+  "genres": [
+    {"id": 4, "name": "action"}
+  ],
+  "homepage": "homepage",
+  "id": 1,
+  "in_production": false,
+  "languages": ["languages"],
+  "last_air_date": "2021-01-01",
+  "last_episode_to_air": {
+    "air_date": "2021-01-01",
+    "episode_number": 12,
+    "id": 44,
+    "name": "name",
+    "overview": "overview",
+    "production_code": "productionCode",
+    "season_number": 1,
+    "still_path": "stillPath",
+    "vote_average": 5.5,
+    "vote_count": 5
+  },
+  "name": "name",
+  "next_episode_to_air": {
+    "air_date": "2021-01-01",
+    "episode_number": 12,
+    "id": 44,
+    "name": "name",
+    "overview": "overview",
+    "production_code": "productionCode",
+    "season_number": 1,
+    "still_path": "stillPath",
+    "vote_average": 5.5,
+    "vote_count": 5
+  },
+  "networks": [
+    {
+      "name": "name",
+      "id": 2,
+      "logo_path": "logoPath",
+      "origin_country": "originCountry"
+    }
+  ],
+  "number_of_episodes": 12,
+  "number_of_seasons": 1,
+  "origin_country": ["originCountry"],
+  "original_language": "originalLanguage",
+  "original_name": "originalName",
+  "overview": "overview",
+  "popularity": 8.8,
+  "poster_path": "/path.jpg",
+  "production_companies": [
+    {
+      "name": "name",
+      "id": 5,
+      "logo_path": "logoPath",
+      "origin_country": "originCountry"
+    }
+  ],
+  "production_countries": [
+    {"iso_3166_1": "iso31661", "name": "name"}
+  ],
+  "seasons": [
+    {
+      "air_date": "2021-01-01",
+      "episode_count": 12,
+      "id": 55,
+      "name": "name",
+      "overview": "overview",
+      "poster_path": "posterPath",
+      "season_number": 1
+    }
+  ],
+  "spoken_languages": [
+    {"english_name": "englishName", "iso_639_1": "iso6391", "name": "name"}
+  ],
+  "status": "status",
+  "tagline": "tagline",
+  "type": "type",
+  "vote_average": 9.9,
+  "vote_count": 200
+};
 
 final testWatchlistTV = TV.watchlist(
   id: 1,

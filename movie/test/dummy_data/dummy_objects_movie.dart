@@ -78,3 +78,53 @@ final testMovieFromCache = Movie.watchlist(
   posterPath: '/rweIrveL43TaxUN0akQEaAXL6x0.jpg',
   title: 'Spider-Man',
 );
+
+const testMovieDetailResponse = MovieDetailResponse(
+  adult: true,
+  backdropPath: 'backdropPath',
+  budget: 1,
+  genres: [GenreModel(id: 1, name: 'name')],
+  homepage: 'homepage',
+  id: 1,
+  imdbId: 'imdbId',
+  originalLanguage: 'originalLanguage',
+  originalTitle: 'originalTitle',
+  overview: 'overview',
+  popularity: 1.1,
+  posterPath: 'posterPath',
+  releaseDate: 'releaseDate',
+  revenue: 1,
+  runtime: 1,
+  status: 'status',
+  tagline: 'tagline',
+  title: 'title',
+  video: false,
+  voteAverage: 1.1,
+  voteCount: 5,
+);
+
+final testMovieDetailResponseMap = {
+  'adult': true,
+  'backdrop_path': 'backdropPath',
+  'budget': 1,
+  'genres': [
+    {'id': 1, 'name': 'name'}
+  ],
+  'homepage': 'homepage',
+  'id': 1,
+  'imdb_id': 'imdbId',
+  'original_language': 'originalLanguage',
+  'original_title': 'originalTitle',
+  'overview': 'overview',
+  'popularity': 1.1,
+  'poster_path': 'posterPath',
+  'release_date': 'releaseDate',
+  'revenue': 1,
+  'runtime': 1,
+  'status': 'status',
+  'tagline': 'tagline',
+  'title': 'title',
+  'video': false,
+  'vote_average': 1.1,
+  'vote_count': 5,
+};

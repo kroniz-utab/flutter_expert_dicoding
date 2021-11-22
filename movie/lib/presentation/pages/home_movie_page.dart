@@ -63,7 +63,27 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is MovieListHasData) {
-                        return MovieList(state.result);
+                        final listMovie = state.result;
+                        return SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final movie = listMovie[index];
+                              return MovieList(
+                                movies: movie,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    movieDetailRoutes,
+                                    arguments: movie.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listMovie.length,
+                          ),
+                        );
                       } else if (state is MovieListError) {
                         return Center(
                           child: Text(state.message),
@@ -89,7 +109,27 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is MoviePopularHasData) {
-                        return MovieList(state.result);
+                        final listMovie = state.result;
+                        return SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final movie = listMovie[index];
+                              return MovieList(
+                                movies: movie,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    movieDetailRoutes,
+                                    arguments: movie.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listMovie.length,
+                          ),
+                        );
                       } else if (state is MoviePopularError) {
                         return Center(
                           child: Text(state.message),
@@ -115,7 +155,27 @@ class _HomeMoviePageState extends State<HomeMoviePage> {
                           child: CircularProgressIndicator(),
                         );
                       } else if (state is MovieTopRatedHasData) {
-                        return MovieList(state.result);
+                        final listMovie = state.result;
+                        return SizedBox(
+                          height: 200,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemBuilder: (context, index) {
+                              final movie = listMovie[index];
+                              return MovieList(
+                                movies: movie,
+                                onTap: () {
+                                  Navigator.pushNamed(
+                                    context,
+                                    movieDetailRoutes,
+                                    arguments: movie.id,
+                                  );
+                                },
+                              );
+                            },
+                            itemCount: listMovie.length,
+                          ),
+                        );
                       } else if (state is MovieTopRatedError) {
                         return Center(
                           child: Text(state.message),

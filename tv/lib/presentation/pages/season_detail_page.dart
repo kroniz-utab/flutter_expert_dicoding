@@ -171,13 +171,33 @@ class SeasonContent extends StatelessWidget {
                             SizedBox(height: 8),
                             seasonList.length == 1
                                 ? SizedBox()
-                                : SeasonsList(
-                                    tvId: tvId,
-                                    tv: seasonList,
-                                    tvPosterPath: posterPath,
-                                    tvName: tvName,
+                                : SizedBox(
                                     height: 150,
-                                    isReplacement: true,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final data = seasonList[index];
+                                        return SeasonsList(
+                                          season: data,
+                                          tvPosterPath: posterPath,
+                                          onTap: () {
+                                            Navigator.pushReplacementNamed(
+                                              context,
+                                              seasonDetailRoutes,
+                                              arguments: {
+                                                'tvId': tvId,
+                                                'seasonNumber':
+                                                    data.seasonNumber,
+                                                'tvPosterPath': posterPath,
+                                                'seasonList': seasonList,
+                                                'tvName': tvName,
+                                              },
+                                            );
+                                          },
+                                        );
+                                      },
+                                      itemCount: seasonList.length,
+                                    ),
                                   ),
                           ],
                         ),

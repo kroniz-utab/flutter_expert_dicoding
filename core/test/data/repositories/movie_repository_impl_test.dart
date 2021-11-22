@@ -108,6 +108,26 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.getNowPlayingMovies())
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.getNowPlayingMovies();
+      // assert
+      verify(mockRemoteDataSource.getNowPlayingMovies());
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.getNowPlayingMovies()).thenThrow('failure');
+      // act
+      final result = await repository.getNowPlayingMovies();
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
   group('Popular Movies', () {
@@ -148,6 +168,26 @@ void main() {
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularMovies())
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.getPopularMovies();
+      // assert
+      verify(mockRemoteDataSource.getPopularMovies());
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.getPopularMovies()).thenThrow('failure');
+      // act
+      final result = await repository.getPopularMovies();
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
   group('Top Rated Movies', () {
@@ -187,6 +227,26 @@ void main() {
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.getTopRatedMovies())
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.getTopRatedMovies();
+      // assert
+      verify(mockRemoteDataSource.getTopRatedMovies());
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.getTopRatedMovies()).thenThrow('failure');
+      // act
+      final result = await repository.getTopRatedMovies();
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
   group('Get Movie Detail', () {
@@ -203,7 +263,7 @@ void main() {
       originalTitle: 'originalTitle',
       overview: 'overview',
       popularity: 1,
-      posterPath: 'posterPath',
+      posterPath: '/path.jpg',
       releaseDate: 'releaseDate',
       revenue: 12000,
       runtime: 120,
@@ -254,6 +314,25 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieDetail(tId))
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.getMovieDetail(tId);
+      // assert
+      verify(mockRemoteDataSource.getMovieDetail(tId));
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieDetail(tId)).thenThrow('failure');
+      // act
+      final result = await repository.getMovieDetail(tId);
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
   group('Get Movie Recommendations', () {
@@ -300,6 +379,27 @@ void main() {
       expect(result,
           equals(Left(ConnectionFailure('Failed to connect to the network'))));
     });
+
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieRecommendations(tId))
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.getMovieRecommendations(tId);
+      // assert
+      verify(mockRemoteDataSource.getMovieRecommendations(tId));
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.getMovieRecommendations(tId))
+          .thenThrow('failure');
+      // act
+      final result = await repository.getMovieRecommendations(tId);
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
   group('Seach Movies', () {
@@ -341,10 +441,51 @@ void main() {
       expect(
           result, Left(ConnectionFailure('Failed to connect to the network')));
     });
+
+    test('should return TLS Exception when certificatie not valid', () async {
+      // arrange
+      when(mockRemoteDataSource.searchMovies(tQuery))
+          .thenThrow(TlsException('test'));
+      // act
+      final result = await repository.searchMovies(tQuery);
+      // assert
+      verify(mockRemoteDataSource.searchMovies(tQuery));
+      expect(result, equals(Left(CommonFailure('Certificate not valid test'))));
+    });
+
+    test('should throw CommonFailure when catch error', () async {
+      // arrange
+      when(mockRemoteDataSource.searchMovies(tQuery)).thenThrow('failure');
+      // act
+      final result = await repository.searchMovies(tQuery);
+      // assert
+      expect(result, equals(Left(CommonFailure('failure'))));
+    });
   });
 
-  group('save watchlist', () {
-    test('should return success message when saving successful', () async {
+  group('watchlist test', () {
+    test('should return watch status whether data is found', () async {
+      // arrange
+      const tId = 1;
+      when(mockLocalDataSource.getMovieById(tId)).thenAnswer((_) async => null);
+      // act
+      final result = await repository.isAddedToWatchlist(tId);
+      // assert
+      expect(result, false);
+    });
+
+    test('should return movie watchlist', () async {
+      // arrange
+      when(mockLocalDataSource.getWatchlistMovies())
+          .thenAnswer((_) async => [testMovieTable]);
+      // act
+      final result = await repository.getWatchlistMovies();
+      // assert
+      final resultList = result.getOrElse(() => []);
+      expect(resultList, [testWatchlistMovie]);
+    });
+
+    test('should return success message when saving is successful', () async {
       // arrange
       when(mockLocalDataSource.insertMovieWatchlist(testMovieTable))
           .thenAnswer((_) async => 'Added to Watchlist');
@@ -354,26 +495,34 @@ void main() {
       expect(result, Right('Added to Watchlist'));
     });
 
-    test('should return DatabaseFailure when saving unsuccessful', () async {
+    test('should return DatabaseFailure when saving is unsuccessful', () async {
       // arrange
       when(mockLocalDataSource.insertMovieWatchlist(testMovieTable))
-          .thenThrow(DatabaseException('Failed to add watchlist'));
+          .thenThrow(DatabaseException('Failed to add Watchlist'));
       // act
       final result = await repository.saveWatchlist(testMovieDetail);
       // assert
-      expect(result, Left(DatabaseFailure('Failed to add watchlist')));
+      expect(result, Left(DatabaseFailure('Failed to add Watchlist')));
     });
-  });
 
-  group('get watchlist status', () {
-    test('should return watch status whether data is found', () async {
+    test('should return success message when remove is successful', () async {
       // arrange
-      const tId = 1;
-      when(mockLocalDataSource.getMovieById(tId)).thenAnswer((_) async => null);
+      when(mockLocalDataSource.removeMovieWatchlist(testMovieTable))
+          .thenAnswer((_) async => 'Removed from watchlist');
       // act
-      final result = await repository.isAddedToWatchlist(tId);
+      final result = await repository.removeWatchlist(testMovieDetail);
       // assert
-      expect(result, false);
+      expect(result, Right('Removed from watchlist'));
+    });
+
+    test('should return DatabaseFailure when remove is unsuccessful', () async {
+      // arrange
+      when(mockLocalDataSource.removeMovieWatchlist(testMovieTable))
+          .thenThrow(DatabaseException('Failed to Remove from watchlist'));
+      // act
+      final result = await repository.removeWatchlist(testMovieDetail);
+      // assert
+      expect(result, Left(DatabaseFailure('Failed to Remove from watchlist')));
     });
   });
 }

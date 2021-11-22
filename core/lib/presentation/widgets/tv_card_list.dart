@@ -3,18 +3,19 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
-import '../../styles/text_styles.dart';
-import '../../utils/routes.dart';
-import '../../utils/constants.dart';
 import '../../domain/entities/tv_entities/tv.dart';
+import '../../styles/text_styles.dart';
+import '../../utils/constants.dart';
 
 class TVShowCard extends StatelessWidget {
   final TV tv;
   final bool isWatchlist;
+  final Function() onTap;
   const TVShowCard({
     Key? key,
     required this.tv,
     required this.isWatchlist,
+    required this.onTap,
   }) : super(key: key);
 
   @override
@@ -22,13 +23,7 @@ class TVShowCard extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 4),
       child: InkWell(
-        onTap: () {
-          Navigator.pushNamed(
-            context,
-            tvDetailRoutes,
-            arguments: tv.id,
-          );
-        },
+        onTap: onTap,
         child: Stack(
           alignment: Alignment.bottomLeft,
           children: [

@@ -66,6 +66,13 @@ class SearchPage extends StatelessWidget {
                     return MovieCard(
                       movie: movie,
                       isWatchlist: false,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          movieDetailRoutes,
+                          arguments: movie.id,
+                        );
+                      },
                     );
                   },
                   itemCount: result.length,
@@ -132,6 +139,13 @@ class SearchPage extends StatelessWidget {
                     return TVShowCard(
                       tv: tv,
                       isWatchlist: false,
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          tvDetailRoutes,
+                          arguments: tv.id,
+                        );
+                      },
                     );
                   },
                   itemCount: result.length,

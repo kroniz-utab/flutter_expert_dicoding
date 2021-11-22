@@ -42,6 +42,13 @@ class _TopRatedMoviesPageState extends State<TopRatedMoviesPage> {
                   return MovieCard(
                     movie: movie,
                     isWatchlist: false,
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        movieDetailRoutes,
+                        arguments: movie.id,
+                      );
+                    },
                   );
                 },
                 itemCount: state.result.length,

@@ -222,13 +222,32 @@ class _DetailContentState extends State<DetailContent> {
                               'Season',
                               style: kHeading6,
                             ),
-                            SeasonsList(
-                              tvId: widget.tv.id,
-                              tv: widget.tv.seasons,
+                            SizedBox(
                               height: 150,
-                              tvPosterPath: widget.tv.posterPath,
-                              tvName: widget.tv.name,
-                              isReplacement: false,
+                              child: ListView.builder(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final data = widget.tv.seasons[index];
+                                  return SeasonsList(
+                                    season: data,
+                                    tvPosterPath: widget.tv.posterPath,
+                                    onTap: () {
+                                      Navigator.pushNamed(
+                                        context,
+                                        seasonDetailRoutes,
+                                        arguments: {
+                                          'tvId': widget.tv.id,
+                                          'seasonNumber': data.seasonNumber,
+                                          'tvPosterPath': widget.tv.posterPath,
+                                          'seasonList': widget.tv.seasons,
+                                          'tvName': widget.tv.name,
+                                        },
+                                      );
+                                    },
+                                  );
+                                },
+                                itemCount: widget.tv.seasons.length,
+                              ),
                             ),
                             SizedBox(height: 16),
                             BlocBuilder<TvRecommendationBloc,
@@ -252,10 +271,26 @@ class _DetailContentState extends State<DetailContent> {
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (state is TvRecommendationHasData) {
-                                  return TVListLayout(
-                                    tv: state.result,
+                                  final listTv = state.result;
+                                  return SizedBox(
                                     height: 150,
-                                    isReplacement: true,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final tv = listTv[index];
+                                        return TVListLayout(
+                                          tv: tv,
+                                          onTap: () {
+                                            Navigator.pushReplacementNamed(
+                                              context,
+                                              tvDetailRoutes,
+                                              arguments: tv.id,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      itemCount: listTv.length,
+                                    ),
                                   );
                                 } else if (state is TvRecommendationError) {
                                   return Expanded(
@@ -290,10 +325,26 @@ class _DetailContentState extends State<DetailContent> {
                                     child: CircularProgressIndicator(),
                                   );
                                 } else if (state is TvSimilarHasData) {
-                                  return TVListLayout(
-                                    tv: state.result,
+                                  final listTv = state.result;
+                                  return SizedBox(
                                     height: 150,
-                                    isReplacement: true,
+                                    child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemBuilder: (context, index) {
+                                        final tv = listTv[index];
+                                        return TVListLayout(
+                                          tv: tv,
+                                          onTap: () {
+                                            Navigator.pushReplacementNamed(
+                                              context,
+                                              tvDetailRoutes,
+                                              arguments: tv.id,
+                                            );
+                                          },
+                                        );
+                                      },
+                                      itemCount: listTv.length,
+                                    ),
                                   );
                                 } else if (state is TvSimilarError) {
                                   return Expanded(
