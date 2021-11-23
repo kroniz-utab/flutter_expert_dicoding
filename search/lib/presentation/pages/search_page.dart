@@ -22,6 +22,7 @@ class SearchPage extends StatelessWidget {
         title: Text('Search'),
       ),
       body: Padding(
+        key: Key('ini_search_page'),
         padding: const EdgeInsets.all(16.0),
         child: isMovieSearch
             ? _buildSearchForMovies(context)
@@ -35,6 +36,7 @@ class SearchPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
+          key: Key('movie_text_field'),
           onChanged: (query) {
             context.read<SearchMoviesBloc>().add(OnQueryMoviesChange(query));
           },
@@ -64,6 +66,7 @@ class SearchPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final movie = result[index];
                     return MovieCard(
+                      key: Key('movie_card_$index'),
                       movie: movie,
                       isWatchlist: false,
                       onTap: () {
@@ -81,21 +84,21 @@ class SearchPage extends StatelessWidget {
             } else if (state is SearchMoviesError) {
               return Expanded(
                 child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else if (state is SearchMoviesEmpty) {
-              return Expanded(
-                child: Center(
                   child: Text(
-                    'Yah, Film yang kamu cari gak ada :(',
-                    style: kSubtitle,
-                    textAlign: TextAlign.center,
+                    state.message,
+                    key: Key('error_message'),
                   ),
                 ),
               );
             } else {
-              return SizedBox();
+              return Expanded(
+                child: Center(
+                  child: Text('Yah, Film yang kamu cari gak ada :(',
+                      style: kSubtitle,
+                      textAlign: TextAlign.center,
+                      key: Key('empty_message')),
+                ),
+              );
             }
           },
         )
@@ -108,6 +111,7 @@ class SearchPage extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         TextField(
+          key: Key('tv_text_field'),
           onChanged: (query) {
             context.read<SearchTvBloc>().add(OnQueryTvChange(query));
           },
@@ -137,6 +141,7 @@ class SearchPage extends StatelessWidget {
                   itemBuilder: (context, index) {
                     final tv = result[index];
                     return TVShowCard(
+                      key: Key('tv_card_$index'),
                       tv: tv,
                       isWatchlist: false,
                       onTap: () {
@@ -154,21 +159,20 @@ class SearchPage extends StatelessWidget {
             } else if (state is SearchTvError) {
               return Expanded(
                 child: Center(
-                  child: Text(state.message),
+                  child: Text(state.message, key: Key('error_message')),
                 ),
               );
-            } else if (state is SearchTvEmpty) {
+            } else {
               return Expanded(
                 child: Center(
                   child: Text(
                     'Yah, Tv Show yang kamu cari gak ada :(',
                     style: kSubtitle,
                     textAlign: TextAlign.center,
+                    key: Key('empty_message'),
                   ),
                 ),
               );
-            } else {
-              return SizedBox();
             }
           },
         )
