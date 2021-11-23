@@ -9,8 +9,8 @@ class FakeHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('fakeHome'),
       body: ListTile(
+        key: const Key('fakeHome'),
         onTap: () {
           Navigator.pushNamed(context, '/next');
         },

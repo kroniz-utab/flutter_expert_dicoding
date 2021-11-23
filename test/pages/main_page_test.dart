@@ -73,9 +73,7 @@ void main() {
           create: (context) => fakePopularTvBloc,
         ),
       ],
-      child: MaterialApp(
-        home: body,
-      ),
+      child: body,
     );
   }
 
@@ -86,6 +84,7 @@ void main() {
     movieRoutes: (context) => FakeDestination(),
     tvDetailRoutes: (context) => FakeDestination(),
     tvRoutes: (context) => FakeDestination(),
+    watchlistRoutes: (context) => FakeDestination(),
   };
 
   testWidgets('should display progress bar when movie list loading',
@@ -114,9 +113,13 @@ void main() {
 
     final listviewFinder = find.byType(ListView);
     final carouselFinder = find.byType(CarouselSlider);
+    final hotTvKeyFinder = find.byKey(Key('hot_tv'));
+    final hotMovieKeyFinder = find.byKey(Key('hot_movies'));
 
     expect(listviewFinder, findsNWidgets(2));
     expect(carouselFinder, findsNWidgets(2));
+    expect(hotTvKeyFinder, findsOneWidget);
+    expect(hotMovieKeyFinder, findsOneWidget);
   });
 
   testWidgets('should display empty text when data is empty', (tester) async {
@@ -144,5 +147,213 @@ void main() {
     final keyFinder = find.byKey(Key('data_error'));
 
     expect(keyFinder, findsNWidgets(4));
+  });
+
+  group('on Tap Testing', () {
+    testWidgets(
+      'should goes to movie home page when hot_movie clicked',
+      (tester) async {
+        when(() => fakeMovieListBloc.state)
+            .thenReturn(MovieListHasData(testMovieList));
+        when(() => fakePopularMovieBloc.state)
+            .thenReturn(MoviePopularHasData(testMovieList));
+        when(() => fakeTvListBloc.state).thenReturn(TvListHasData(testTVList));
+        when(() => fakePopularTvBloc.state)
+            .thenReturn(TvPopularHasData(testTVList));
+
+        await tester.pumpWidget(MaterialApp(
+          routes: routes,
+        ));
+
+        expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+        await tester.tap(find.byKey(const Key('fakeHome')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        final hotTvKeyFinder = find.byKey(Key('hot_tv'));
+        final hotMovieKeyFinder = find.byKey(Key('hot_movies'));
+
+        expect(hotTvKeyFinder, findsOneWidget);
+        expect(hotMovieKeyFinder, findsOneWidget);
+
+        // on Tap testing
+        await tester.tap(find.byKey(Key('hot_movies')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(hotTvKeyFinder, findsNothing);
+        expect(hotMovieKeyFinder, findsNothing);
+      },
+    );
+
+    testWidgets(
+      'should goes to tv home page when hot_tv clicked',
+      (tester) async {
+        when(() => fakeMovieListBloc.state)
+            .thenReturn(MovieListHasData(testMovieList));
+        when(() => fakePopularMovieBloc.state)
+            .thenReturn(MoviePopularHasData(testMovieList));
+        when(() => fakeTvListBloc.state).thenReturn(TvListHasData(testTVList));
+        when(() => fakePopularTvBloc.state)
+            .thenReturn(TvPopularHasData(testTVList));
+
+        await tester.pumpWidget(MaterialApp(
+          routes: routes,
+        ));
+
+        expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+        await tester.tap(find.byKey(const Key('fakeHome')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        final hotTvKeyFinder = find.byKey(Key('hot_tv'));
+        final hotMovieKeyFinder = find.byKey(Key('hot_movies'));
+
+        expect(hotTvKeyFinder, findsOneWidget);
+        expect(hotMovieKeyFinder, findsOneWidget);
+
+        // on Tap testing
+        await tester.dragUntilVisible(
+          hotTvKeyFinder,
+          find.byType(SingleChildScrollView),
+          Offset(0, 300),
+        );
+        await tester.tap(hotTvKeyFinder);
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(hotTvKeyFinder, findsNothing);
+        expect(hotMovieKeyFinder, findsNothing);
+      },
+    );
+
+    testWidgets(
+      'should goes to movie detail page when movie carousel clicked',
+      (tester) async {
+        when(() => fakeMovieListBloc.state)
+            .thenReturn(MovieListHasData(testMovieList));
+        when(() => fakePopularMovieBloc.state)
+            .thenReturn(MoviePopularHasData(testMovieList));
+        when(() => fakeTvListBloc.state).thenReturn(TvListHasData(testTVList));
+        when(() => fakePopularTvBloc.state)
+            .thenReturn(TvPopularHasData(testTVList));
+
+        await tester.pumpWidget(MaterialApp(
+          routes: routes,
+        ));
+
+        expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+        await tester.tap(find.byKey(const Key('fakeHome')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('mCard_0')), findsOneWidget);
+        expect(find.byKey(Key('main_page')), findsOneWidget);
+
+        // on Tap testing
+        await tester.tap(find.byKey(Key('mCard_0')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('mCard_0')), findsNothing);
+        expect(find.byKey(Key('main_page')), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'should goes to tv detail page when tv carousel clicked',
+      (tester) async {
+        when(() => fakeMovieListBloc.state)
+            .thenReturn(MovieListHasData(testMovieList));
+        when(() => fakePopularMovieBloc.state)
+            .thenReturn(MoviePopularHasData(testMovieList));
+        when(() => fakeTvListBloc.state).thenReturn(TvListHasData(testTVList));
+        when(() => fakePopularTvBloc.state)
+            .thenReturn(TvPopularHasData(testTVList));
+
+        await tester.pumpWidget(MaterialApp(
+          routes: routes,
+        ));
+
+        expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+        await tester.tap(find.byKey(const Key('fakeHome')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('tCard_0')), findsOneWidget);
+        expect(find.byKey(Key('main_page')), findsOneWidget);
+
+        // on Tap testing
+        await tester.dragUntilVisible(
+          find.byKey(Key('tCard_0')),
+          find.byType(SingleChildScrollView),
+          Offset(0, 400),
+        );
+        await tester.tap(find.byKey(Key('tCard_0')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('tCard_0')), findsNothing);
+        expect(find.byKey(Key('main_page')), findsNothing);
+      },
+    );
+
+    testWidgets(
+      'should goes to watchlist page when watchlist icon clicked',
+      (tester) async {
+        when(() => fakeMovieListBloc.state)
+            .thenReturn(MovieListHasData(testMovieList));
+        when(() => fakePopularMovieBloc.state)
+            .thenReturn(MoviePopularHasData(testMovieList));
+        when(() => fakeTvListBloc.state).thenReturn(TvListHasData(testTVList));
+        when(() => fakePopularTvBloc.state)
+            .thenReturn(TvPopularHasData(testTVList));
+
+        await tester.pumpWidget(MaterialApp(
+          routes: routes,
+        ));
+
+        expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+        await tester.tap(find.byKey(const Key('fakeHome')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('go_to_watchlist')), findsOneWidget);
+        expect(find.byKey(Key('main_page')), findsOneWidget);
+
+        // on Tap testing
+        await tester.tap(find.byKey(Key('go_to_watchlist')));
+
+        for (var i = 0; i < 5; i++) {
+          await tester.pump(const Duration(seconds: 1));
+        }
+
+        expect(find.byKey(Key('go_to_watchlist')), findsNothing);
+        expect(find.byKey(Key('main_page')), findsNothing);
+      },
+    );
   });
 }

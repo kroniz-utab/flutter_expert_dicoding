@@ -40,6 +40,7 @@ class _MainPageState extends State<MainPage> {
             title: Text('Ditonton'),
             actions: [
               IconButton(
+                key: Key('go_to_watchlist'),
                 onPressed: () {
                   Navigator.pushNamed(
                     context,
@@ -67,14 +68,6 @@ class _MainPageState extends State<MainPage> {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is MovieListEmpty) {
-                        return Container(
-                          key: Key('data_kosong'),
-                          height: 200,
-                          child: Center(
-                            child: Text('No one movie is playing'),
-                          ),
-                        );
                       } else if (state is MovieListHasData) {
                         final listMovies = state.result;
                         return _buildMoviesCarousel(listMovies);
@@ -87,7 +80,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                         );
                       } else {
-                        return Text('Failed');
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one movie is playing'),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -100,6 +99,7 @@ class _MainPageState extends State<MainPage> {
                         movieRoutes,
                       );
                     },
+                    key: 'hot_movies',
                   ),
                   SizedBox(height: 10),
                   BlocBuilder<MoviePopularBloc, MoviePopularState>(
@@ -107,14 +107,6 @@ class _MainPageState extends State<MainPage> {
                       if (state is MoviePopularLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
-                        );
-                      } else if (state is MoviePopularEmpty) {
-                        return Container(
-                          key: Key('data_kosong'),
-                          height: 200,
-                          child: Center(
-                            child: Text('No one popular movies'),
-                          ),
                         );
                       } else if (state is MoviePopularHasData) {
                         final listMovie = state.result;
@@ -125,6 +117,7 @@ class _MainPageState extends State<MainPage> {
                             itemBuilder: (context, index) {
                               final movie = listMovie[index];
                               return MovieList(
+                                key: Key('mCard_$index'),
                                 movies: movie,
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -147,7 +140,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                         );
                       } else {
-                        return Text('Failed');
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one popular movies'),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -162,14 +161,6 @@ class _MainPageState extends State<MainPage> {
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is TvListEmpty) {
-                        return Container(
-                          key: Key('data_kosong'),
-                          height: 200,
-                          child: Center(
-                            child: Text('No one tv show is playing'),
-                          ),
-                        );
                       } else if (state is TvListHasData) {
                         final listTv = state.result;
                         return _buildTVCarousel(listTv);
@@ -182,7 +173,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                         );
                       } else {
-                        return Text('Failed');
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one tv show is playing'),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -195,6 +192,7 @@ class _MainPageState extends State<MainPage> {
                         tvRoutes,
                       );
                     },
+                    key: 'hot_tv',
                   ),
                   SizedBox(height: 10),
                   BlocBuilder<TvPopularBloc, TvPopularState>(
@@ -202,14 +200,6 @@ class _MainPageState extends State<MainPage> {
                       if (state is TvPopularLoading) {
                         return Center(
                           child: CircularProgressIndicator(),
-                        );
-                      } else if (state is TvPopularEmpty) {
-                        return Container(
-                          key: Key('data_kosong'),
-                          height: 200,
-                          child: Center(
-                            child: Text('No one popular tv show'),
-                          ),
                         );
                       } else if (state is TvPopularHasData) {
                         final listTv = state.result;
@@ -220,6 +210,7 @@ class _MainPageState extends State<MainPage> {
                             itemBuilder: (context, index) {
                               final tv = listTv[index];
                               return TVListLayout(
+                                key: Key('tCard_$index'),
                                 tv: tv,
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -242,7 +233,13 @@ class _MainPageState extends State<MainPage> {
                           ),
                         );
                       } else {
-                        return Text('Failed');
+                        return Container(
+                          key: Key('data_kosong'),
+                          height: 200,
+                          child: Center(
+                            child: Text('No one popular tv show'),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -255,7 +252,11 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Row _buildSubHeading({required String title, required Function() onTap}) {
+  Row _buildSubHeading({
+    required String title,
+    required Function() onTap,
+    required String key,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -268,7 +269,13 @@ class _MainPageState extends State<MainPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
-              children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
+              key: Key(key),
+              children: const [
+                Text(
+                  'See More',
+                ),
+                Icon(Icons.arrow_forward_ios)
+              ],
             ),
           ),
         ),
@@ -282,6 +289,7 @@ class _MainPageState extends State<MainPage> {
       itemBuilder: (context, index, realIndex) {
         final content = list[index];
         return InkWell(
+          key: Key('mCarousel_$index'),
           onTap: () {
             Navigator.pushNamed(
               context,
@@ -353,6 +361,7 @@ class _MainPageState extends State<MainPage> {
       itemBuilder: (context, index, realIndex) {
         final content = list[index];
         return InkWell(
+          key: Key('tCarousel_$index'),
           onTap: () {
             Navigator.pushNamed(
               context,
