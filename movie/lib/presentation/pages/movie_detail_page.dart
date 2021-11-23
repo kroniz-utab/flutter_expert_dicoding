@@ -47,8 +47,8 @@ class _MovieDetailPageState extends State<MovieDetailPage> {
             final movie = state.result;
             return SafeArea(
               child: DetailContent(
-                movie,
                 isAddedToWatchlist,
+                movie: movie,
               ),
             );
           } else if (state is MovieDetailError) {
@@ -77,9 +77,10 @@ class DetailContent extends StatefulWidget {
   bool isAddedWatchlist;
 
   DetailContent(
-    this.movie,
-    this.isAddedWatchlist,
-  );
+    this.isAddedWatchlist, {
+    Key? key,
+    required this.movie,
+  }) : super(key: key);
 
   @override
   State<DetailContent> createState() => _DetailContentState();
@@ -281,6 +282,7 @@ class _DetailContentState extends State<DetailContent> {
           return Padding(
             padding: const EdgeInsets.all(4.0),
             child: InkWell(
+              key: Key('recom_$index'),
               onTap: () {
                 Navigator.pushReplacementNamed(
                   context,

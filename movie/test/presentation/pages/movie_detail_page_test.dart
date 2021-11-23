@@ -67,6 +67,14 @@ void main() {
     );
   }
 
+  final routes = <String, WidgetBuilder>{
+    '/': (context) => const FakeHome(),
+    '/next': (context) => _makeAnotherTestableWidget(const MovieDetailPage(
+          id: 1,
+        )),
+    movieDetailRoutes: (context) => const FakeDestination(),
+  };
+
   testWidgets('should show circular progress when movie detail is loading',
       (tester) async {
     when(() => fakeMovieBloc.state).thenReturn(MovieDetailLoading());
@@ -252,4 +260,79 @@ void main() {
 
     expect(find.byKey(Key('recom_empty')), findsOneWidget);
   });
+
+  testWidgets(
+    "should back to previous page when arrow back icon was clicked",
+    (WidgetTester tester) async {
+      when(() => fakeMovieBloc.state)
+          .thenReturn(MovieDetailHasData(testMovieDetail));
+      when(() => fakeRecommendationMovieBloc.state)
+          .thenReturn(MovieRecommendationHasData(testMovieList));
+      when(() => fakeWatchlistBloc.state)
+          .thenReturn(MovieIsAddedToWatchlist(false));
+
+      await tester.pumpWidget(MaterialApp(
+        routes: routes,
+      ));
+
+      expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('fakeHome')));
+
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(seconds: 1));
+      }
+
+      expect(find.byIcon(Icons.arrow_back), findsOneWidget);
+      expect(find.byKey(const Key('fakeHome')), findsNothing);
+
+      await tester.tap(find.byIcon(Icons.arrow_back));
+
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(seconds: 1));
+      }
+
+      expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+      expect(find.byIcon(Icons.arrow_back), findsNothing);
+    },
+  );
+
+  testWidgets(
+    "should go to another movie detail page when recom card was clicked",
+    (WidgetTester tester) async {
+      when(() => fakeMovieBloc.state)
+          .thenReturn(MovieDetailHasData(testMovieDetail));
+      when(() => fakeRecommendationMovieBloc.state)
+          .thenReturn(MovieRecommendationHasData(testMovieList));
+      when(() => fakeWatchlistBloc.state)
+          .thenReturn(MovieIsAddedToWatchlist(false));
+
+      await tester.pumpWidget(MaterialApp(
+        routes: routes,
+      ));
+
+      expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+      await tester.tap(find.byKey(const Key('fakeHome')));
+
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(seconds: 1));
+      }
+
+      expect(find.byKey(Key('recom_0')), findsOneWidget);
+
+      await tester.dragUntilVisible(
+        find.byKey(Key('recom_0')),
+        find.byType(SingleChildScrollView),
+        Offset(0, 100),
+      );
+      await tester.tap(find.byKey(Key('recom_0')));
+
+      for (var i = 0; i < 5; i++) {
+        await tester.pump(const Duration(seconds: 1));
+      }
+
+      expect(find.byKey(Key('recom_0')), findsNothing);
+    },
+  );
 }

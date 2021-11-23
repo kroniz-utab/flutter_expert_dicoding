@@ -280,6 +280,50 @@ void main() {
     expect(find.byKey(const Key('this_is_home_movie')), findsNothing);
   });
 
+  testWidgets('Tapping on top rated card should go to movie detail page',
+      (tester) async {
+    when(() => fakeMovieListBloc.state)
+        .thenReturn(MovieListHasData(testMovieList));
+    when(() => fakePopularMovieBloc.state)
+        .thenReturn(MoviePopularHasData(testMovieList));
+    when(() => fakeTopRatedMovieBloc.state)
+        .thenReturn(MovieTopRatedHasData(testMovieList));
+
+    await tester.pumpWidget(MaterialApp(
+      routes: routes,
+    ));
+
+    expect(find.byKey(const Key('fakeHome')), findsOneWidget);
+
+    await tester.tap(find.byKey(const Key('fakeHome')));
+
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(seconds: 1));
+    }
+
+    expect(find.byKey(const Key('now_play_0')), findsOneWidget);
+    expect(find.byKey(const Key('popular_0')), findsOneWidget);
+    expect(find.byKey(const Key('top_rated_0')), findsOneWidget);
+    expect(find.byKey(const Key('this_is_home_movie')), findsOneWidget);
+
+    // on tap testing
+    await tester.dragUntilVisible(
+      find.byKey(const Key('top_rated_0')),
+      find.byType(SingleChildScrollView),
+      const Offset(0, 100),
+    );
+    await tester.tap(find.byKey(const Key('top_rated_0')));
+
+    for (var i = 0; i < 5; i++) {
+      await tester.pump(const Duration(seconds: 1));
+    }
+
+    expect(find.byKey(const Key('now_play_0')), findsNothing);
+    expect(find.byKey(const Key('popular_0')), findsNothing);
+    expect(find.byKey(const Key('top_rated_0')), findsNothing);
+    expect(find.byKey(const Key('this_is_home_movie')), findsNothing);
+  });
+
   testWidgets('Tapping search icon should go to movie searchPage',
       (tester) async {
     when(() => fakeMovieListBloc.state)
