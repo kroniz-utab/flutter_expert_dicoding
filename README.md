@@ -8,13 +8,13 @@
 - [x] Implements Continous Integration on project (Using [CodeMagic](https://codemagic.io/apps/61976348e2c8da10e24cf4b6/61976348e2c8da10e24cf4b5/latest_build))
 - [x] Using Bloc Library
 - [x] Implements SSL Pinning
-- [x] Integration with Firebase Analytics & Crashlytics
+- [x] Integration with Firebase [Analytics](https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/firebase/firebase_analytics.png) & [Crashlytics](https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/firebase/firebase_crashlytics.png)
 
 ## Submission Optional
 
 - [x] Modularization (at least 2 feature)
 - [x] Add Season feature
-- [x] > 95% test coverage (can see through local test or via Codecov)
+- [x] > 95% test coverage (can see through [local test](https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/local_coverage/local_coverage_result.png) or via [Codecov](https://codecov.io/gh/kroniz-utab/flutter_expert_dicoding))
 
 ## How to Run Local Test
 
