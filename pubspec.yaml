@@ -37,7 +37,6 @@ dependencies:
   mocktail: ^0.2.0
   movie:
     path: movie
-  provider: ^6.0.1
   search:
     path: search
   tv:

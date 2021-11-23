@@ -18,7 +18,6 @@ dependencies:
   flutter_rating_bar: ^4.0.0
   google_fonts: ^2.1.0
   http: ^0.13.4
-  provider: ^6.0.1
   readmore: ^2.1.0
   sqflite: ^2.0.0+4
 
