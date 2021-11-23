@@ -50,6 +50,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
+              key: Key('this_is_watchlist'),
               child: Column(
                 children: [
                   BlocBuilder<MovieWatchlistBloc, MovieWatchlistState>(
@@ -58,8 +59,6 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is MovieWatchlistEmpty) {
-                        return SizedBox();
                       } else if (state is MovieWatchlistHasData) {
                         return ListView.builder(
                           shrinkWrap: true,
@@ -67,6 +66,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                           itemBuilder: (context, index) {
                             final movie = state.result[index];
                             return MovieCard(
+                              key: Key('movie_card_$index'),
                               movie: movie,
                               isWatchlist: true,
                               onTap: () {
@@ -86,9 +86,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                           child: Text(state.message),
                         );
                       } else {
-                        return Center(
-                          key: Key('error_message'),
-                          child: Text('Error!'),
+                        return SizedBox(
+                          key: Key('empty_data'),
                         );
                       }
                     },
@@ -99,8 +98,6 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                         return Center(
                           child: CircularProgressIndicator(),
                         );
-                      } else if (state is TvWatchlistEmpty) {
-                        return SizedBox();
                       } else if (state is TvWatchlistHasData) {
                         return ListView.builder(
                           shrinkWrap: true,
@@ -108,6 +105,7 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                           itemBuilder: (context, index) {
                             final tv = state.result[index];
                             return TVShowCard(
+                              key: Key('tv_card_$index'),
                               tv: tv,
                               isWatchlist: true,
                               onTap: () {
@@ -127,9 +125,8 @@ class _WatchlistMoviesPageState extends State<WatchlistMoviesPage>
                           child: Text(state.message),
                         );
                       } else {
-                        return Center(
-                          key: Key('error_message'),
-                          child: Text('Error!'),
+                        return SizedBox(
+                          key: Key('empty_data'),
                         );
                       }
                     },
