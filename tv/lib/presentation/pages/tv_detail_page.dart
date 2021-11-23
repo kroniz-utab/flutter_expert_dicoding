@@ -48,20 +48,24 @@ class _TVDetailPageState extends State<TVDetailPage> {
             final tv = state.result;
             return SafeArea(
               child: DetailContent(
+                isAddedToWatchlist,
                 tv: tv,
-                isAddedWatchlist: isAddedToWatchlist,
               ),
-            );
-          } else if (state is TvDetailEmpty) {
-            return Center(
-              child: Text('Detail is empty'),
             );
           } else if (state is TvDetailError) {
             return Center(
-              child: Text(state.message),
+              child: Text(
+                state.message,
+                key: Key('error_message'),
+              ),
             );
           } else {
-            return SizedBox();
+            return Center(
+              child: Text(
+                'Detail is empty',
+                key: Key('empty_message'),
+              ),
+            );
           }
         },
       ),
@@ -71,12 +75,12 @@ class _TVDetailPageState extends State<TVDetailPage> {
 
 class DetailContent extends StatefulWidget {
   final TVDetail tv;
-  final bool isAddedWatchlist;
+  bool isAddedWatchlist;
 
-  const DetailContent({
+  DetailContent(
+    this.isAddedWatchlist, {
     Key? key,
     required this.tv,
-    required this.isAddedWatchlist,
   }) : super(key: key);
 
   @override
@@ -138,17 +142,15 @@ class _DetailContentState extends State<DetailContent> {
                                       .add(RemoveTvFromWatchlist(widget.tv));
                                 }
 
-                                final message = context.select<TvWatchlistBloc,
-                                    String>((value) => (value
-                                        .state is TvIsAddedToWatchlist)
-                                    ? (value.state as TvIsAddedToWatchlist)
-                                                .isAdded ==
-                                            false
-                                        ? messageWatchlistAddSuccess
-                                        : messageWatchlistRemoveSuccess
-                                    : !widget.isAddedWatchlist
-                                        ? messageWatchlistAddSuccess
-                                        : messageWatchlistRemoveSuccess);
+                                final message =
+                                    context.select<TvWatchlistBloc, String>(
+                                  (value) =>
+                                      (value.state as TvIsAddedToWatchlist)
+                                                  .isAdded ==
+                                              false
+                                          ? messageWatchlistAddSuccess
+                                          : messageWatchlistRemoveSuccess,
+                                );
 
                                 if (message == messageWatchlistAddSuccess ||
                                     message == messageWatchlistRemoveSuccess) {
@@ -163,6 +165,11 @@ class _DetailContentState extends State<DetailContent> {
                                         );
                                       });
                                 }
+
+                                setState(() {
+                                  widget.isAddedWatchlist =
+                                      !widget.isAddedWatchlist;
+                                });
                               },
                               child: Row(
                                 mainAxisSize: MainAxisSize.min,
@@ -229,6 +236,7 @@ class _DetailContentState extends State<DetailContent> {
                                 itemBuilder: (context, index) {
                                   final data = widget.tv.seasons[index];
                                   return SeasonsList(
+                                    key: Key('season_$index'),
                                     season: data,
                                     tvPosterPath: widget.tv.posterPath,
                                     onTap: () {
@@ -279,6 +287,7 @@ class _DetailContentState extends State<DetailContent> {
                                       itemBuilder: (context, index) {
                                         final tv = listTv[index];
                                         return TVListLayout(
+                                          key: Key('recom_$index'),
                                           tv: tv,
                                           onTap: () {
                                             Navigator.pushReplacementNamed(
@@ -293,15 +302,16 @@ class _DetailContentState extends State<DetailContent> {
                                     ),
                                   );
                                 } else if (state is TvRecommendationError) {
-                                  return Expanded(
-                                    child: Center(
-                                      child: Text(state.message),
+                                  return Center(
+                                    child: Text(
+                                      state.message,
+                                      key: Key('recom_error'),
                                     ),
                                   );
-                                } else if (state is TvRecommendationEmpty) {
-                                  return SizedBox();
                                 } else {
-                                  return SizedBox();
+                                  return SizedBox(
+                                    key: Key('recom_empty'),
+                                  );
                                 }
                               },
                             ),
@@ -333,6 +343,7 @@ class _DetailContentState extends State<DetailContent> {
                                       itemBuilder: (context, index) {
                                         final tv = listTv[index];
                                         return TVListLayout(
+                                          key: Key('similar_$index'),
                                           tv: tv,
                                           onTap: () {
                                             Navigator.pushReplacementNamed(
@@ -347,15 +358,16 @@ class _DetailContentState extends State<DetailContent> {
                                     ),
                                   );
                                 } else if (state is TvSimilarError) {
-                                  return Expanded(
-                                    child: Center(
-                                      child: Text(state.message),
+                                  return Center(
+                                    child: Text(
+                                      state.message,
+                                      key: Key('similar_error'),
                                     ),
                                   );
-                                } else if (state is TvSimilarEmpty) {
-                                  return SizedBox();
                                 } else {
-                                  return SizedBox();
+                                  return SizedBox(
+                                    key: Key('similar_empty'),
+                                  );
                                 }
                               },
                             ),

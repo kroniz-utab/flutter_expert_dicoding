@@ -49,6 +49,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
           body: Padding(
             padding: const EdgeInsets.all(8.0),
             child: SingleChildScrollView(
+              key: Key('this_is_home_tv'),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -71,6 +72,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemBuilder: (context, index) {
                               final tv = listTv[index];
                               return TVListLayout(
+                                key: Key('ota_$index'),
                                 tv: tv,
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -84,25 +86,29 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemCount: listTv.length,
                           ),
                         );
-                      } else if (state is TvListEmpty) {
-                        return Center(
-                          child: Text('There are no tv currently showing'),
-                        );
                       } else if (state is TvListError) {
                         return Center(
-                          child: Text(state.message),
+                          child: Text(
+                            state.message,
+                            key: Key('error_message'),
+                          ),
                         );
                       } else {
-                        return SizedBox();
+                        return Center(
+                          child: Text(
+                            'There are no tv currently showing',
+                            key: Key('empty_message'),
+                          ),
+                        );
                       }
                     },
                   ),
                   _buildSubHeading(
-                    title: 'Popular TV Shows',
-                    onTap: () {
-                      Navigator.pushNamed(context, popularTVRoutes);
-                    },
-                  ),
+                      title: 'Popular TV Shows',
+                      onTap: () {
+                        Navigator.pushNamed(context, popularTVRoutes);
+                      },
+                      key: 'see_more_popular'),
                   BlocBuilder<TvPopularBloc, TvPopularState>(
                     builder: (context, state) {
                       if (state is TvPopularLoading) {
@@ -118,6 +124,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemBuilder: (context, index) {
                               final tv = listTv[index];
                               return TVListLayout(
+                                key: Key('popular_$index'),
                                 tv: tv,
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -131,25 +138,29 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemCount: listTv.length,
                           ),
                         );
-                      } else if (state is TvPopularEmpty) {
-                        return Center(
-                          child: Text('There are no tv popular showing'),
-                        );
                       } else if (state is TvPopularError) {
                         return Center(
-                          child: Text(state.message),
+                          child: Text(
+                            state.message,
+                            key: Key('error_message'),
+                          ),
                         );
                       } else {
-                        return SizedBox();
+                        return Center(
+                          child: Text(
+                            'There are no tv popular showing',
+                            key: Key('empty_message'),
+                          ),
+                        );
                       }
                     },
                   ),
                   _buildSubHeading(
-                    title: 'Top Rated',
-                    onTap: () {
-                      Navigator.pushNamed(context, topRatedTVRoutes);
-                    },
-                  ),
+                      title: 'Top Rated',
+                      onTap: () {
+                        Navigator.pushNamed(context, topRatedTVRoutes);
+                      },
+                      key: 'see_more_top_rated'),
                   BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
                     builder: (context, state) {
                       if (state is TvTopRatedLoading) {
@@ -165,6 +176,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemBuilder: (context, index) {
                               final tv = listTv[index];
                               return TVListLayout(
+                                key: Key('top_rated_$index'),
                                 tv: tv,
                                 onTap: () {
                                   Navigator.pushNamed(
@@ -178,16 +190,20 @@ class _HomeTVPageState extends State<HomeTVPage> {
                             itemCount: listTv.length,
                           ),
                         );
-                      } else if (state is TvTopRatedEmpty) {
-                        return Center(
-                          child: Text('There are no tv top rated showing'),
-                        );
                       } else if (state is TvTopRatedError) {
                         return Center(
-                          child: Text(state.message),
+                          child: Text(
+                            state.message,
+                            key: Key('error_message'),
+                          ),
                         );
                       } else {
-                        return SizedBox();
+                        return Center(
+                          child: Text(
+                            'There are no tv top rated showing',
+                            key: Key('empty_message'),
+                          ),
+                        );
                       }
                     },
                   ),
@@ -200,7 +216,11 @@ class _HomeTVPageState extends State<HomeTVPage> {
     );
   }
 
-  Row _buildSubHeading({required String title, required Function() onTap}) {
+  Row _buildSubHeading({
+    required String title,
+    required Function() onTap,
+    required String key,
+  }) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -213,6 +233,7 @@ class _HomeTVPageState extends State<HomeTVPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Row(
+              key: Key(key),
               children: const [Text('See More'), Icon(Icons.arrow_forward_ios)],
             ),
           ),

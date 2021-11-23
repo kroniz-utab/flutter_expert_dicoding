@@ -31,6 +31,7 @@ class _PopularTVPageState extends State<PopularTVPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<TvPopularBloc, TvPopularState>(
+          key: Key('this_is_popular_page'),
           builder: (context, state) {
             if (state is TvPopularLoading) {
               return Center(
@@ -41,6 +42,7 @@ class _PopularTVPageState extends State<PopularTVPage> {
                 itemBuilder: (context, index) {
                   final tv = state.result[index];
                   return TVShowCard(
+                    key: Key('card_$index'),
                     tv: tv,
                     isWatchlist: false,
                     onTap: () {
@@ -55,19 +57,19 @@ class _PopularTVPageState extends State<PopularTVPage> {
                 itemCount: state.result.length,
               );
             } else if (state is TvPopularError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else if (state is TvPopularEmpty) {
-              return Expanded(
-                child: Center(
-                  child: Text('There are no one popular tv show'),
+              return Center(
+                child: Text(
+                  state.message,
+                  key: Key('error_message'),
                 ),
               );
             } else {
-              return SizedBox();
+              return Center(
+                child: Text(
+                  'There are no one popular tv show',
+                  key: Key('empty_data'),
+                ),
+              );
             }
           },
         ),

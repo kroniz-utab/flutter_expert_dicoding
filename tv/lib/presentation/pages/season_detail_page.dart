@@ -46,6 +46,7 @@ class _SeasonDetailPageState extends State<SeasonDetailPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: BlocBuilder<TvSeasonDetailBloc, TvSeasonDetailState>(
+        key: Key('this_is_season_detail'),
         builder: (context, state) {
           if (state is TvSeasonDetailLoading) {
             return Center(
@@ -61,10 +62,13 @@ class _SeasonDetailPageState extends State<SeasonDetailPage> {
             );
           } else if (state is TvSeasonDetailError) {
             return Center(
-              child: Text(state.message),
+              child: Text(
+                state.message,
+                key: Key('season_error'),
+              ),
             );
           } else {
-            return SizedBox();
+            return SizedBox(key: Key('season_empty'));
           }
         },
       ),
@@ -157,7 +161,10 @@ class SeasonContent extends StatelessWidget {
                                 );
                               },
                               separatorBuilder: (context, index) {
-                                return SizedBox(height: 8);
+                                return SizedBox(
+                                  height: 8,
+                                  key: Key('separator'),
+                                );
                               },
                               itemCount: seasonData.episodes.length,
                             ),
@@ -167,6 +174,7 @@ class SeasonContent extends StatelessWidget {
                                 : Text(
                                     'Other Season',
                                     style: kHeading6,
+                                    key: Key('other_season'),
                                   ),
                             SizedBox(height: 8),
                             seasonList.length == 1
@@ -178,6 +186,7 @@ class SeasonContent extends StatelessWidget {
                                       itemBuilder: (context, index) {
                                         final data = seasonList[index];
                                         return SeasonsList(
+                                          key: Key('season_$index'),
                                           season: data,
                                           tvPosterPath: posterPath,
                                           onTap: () {

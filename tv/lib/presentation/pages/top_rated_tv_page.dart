@@ -31,6 +31,7 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<TvTopRatedBloc, TvTopRatedState>(
+          key: Key('this_is_top_rated'),
           builder: (context, state) {
             if (state is TvTopRatedLoading) {
               return Center(
@@ -41,6 +42,7 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
                 itemBuilder: (context, index) {
                   final tv = state.result[index];
                   return TVShowCard(
+                    key: Key('card_$index'),
                     tv: tv,
                     isWatchlist: false,
                     onTap: () {
@@ -55,19 +57,19 @@ class _TopRatedTVPageState extends State<TopRatedTVPage> {
                 itemCount: state.result.length,
               );
             } else if (state is TvTopRatedError) {
-              return Expanded(
-                child: Center(
-                  child: Text(state.message),
-                ),
-              );
-            } else if (state is TvTopRatedEmpty) {
-              return Expanded(
-                child: Center(
-                  child: Text('There are no one top rated tv show'),
+              return Center(
+                child: Text(
+                  state.message,
+                  key: Key('error_message'),
                 ),
               );
             } else {
-              return SizedBox();
+              return Center(
+                child: Text(
+                  'There are no one top rated tv show',
+                  key: Key('empty_data'),
+                ),
+              );
             }
           },
         ),
