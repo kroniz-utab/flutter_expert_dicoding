@@ -117,12 +117,8 @@ class _CustomDrawerState extends State<CustomDrawer>
         ),
         ListTile(
           onTap: () {
-            if (widget.location != aboutRoutes) {
-              Navigator.pushNamed(context, aboutRoutes);
-              toggle();
-            } else {
-              toggle();
-            }
+            Navigator.pushNamed(context, aboutRoutes);
+            toggle();
           },
           leading: Icon(Icons.info_outline),
           title: Text('About'),

@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import '../../domain/entities/movie_entities/movie.dart';
 import '../../styles/text_styles.dart';
 import '../../utils/constants.dart';
-import '../../utils/routes.dart';
 
 class MovieCard extends StatelessWidget {
   final Movie movie;
@@ -78,10 +77,7 @@ class MovieCard extends StatelessWidget {
                   placeholder: (context, url) => Center(
                     child: CircularProgressIndicator(),
                   ),
-                  errorWidget: (context, url, error) => Icon(
-                    Icons.error,
-                    key: Key('error_icon'),
-                  ),
+                  errorWidget: (context, url, error) => Icon(Icons.error),
                 ),
                 borderRadius: BorderRadius.all(Radius.circular(8)),
               ),

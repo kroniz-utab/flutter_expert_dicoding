@@ -12,11 +12,11 @@ class FakeHome extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       key: const Key('fakeHome'),
-      body: body,
       appBar: AppBar(
         title: const Text('fakeHome'),
         leading: const Icon(Icons.menu),
       ),
+      body: body,
     );
   }
 }
@@ -29,13 +29,13 @@ class FakeDestination extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: const Key('fakeDestination'),
-      body: const Center(
-        child: Text('ini destinasi'),
-      ),
-      appBar: AppBar(
-        title: const Text('fakeDestination'),
-        leading: const Icon(Icons.menu),
+      body: ListTile(
+        key: const Key('fakeDestination'),
+        onTap: () {
+          Navigator.pop(context);
+        },
+        title: const Text('fake Destination'),
+        leading: const Icon(Icons.check),
       ),
     );
   }
@@ -49,6 +49,7 @@ MaterialApp testableMaterialApp(routes, page) {
       scaffoldBackgroundColor: kRichBlack,
       textTheme: kTextTheme,
     ),
+    routes: routes,
     home: page,
   );
 }
