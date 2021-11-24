@@ -34,3 +34,11 @@
     ```
 
   you must install `genhtml` first, if you not installed yet, you can follow this [step](https://stackoverflow.com/questions/50789578/how-can-the-code-coverage-data-from-flutter-tests-be-displayed)
+
+## Apps Screenshoot
+
+<p align="center"><img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/1_main_page.jpg?raw=true" height="500"></img>&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/2_custom_drawer.jpg?raw=true" height="500">&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/3_about_page.jpg?raw=true" height="500"></p>
+
+<p align="center"><img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/4_1_movie_home_page.jpg?raw=true" height="500"></img>&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/4_2_movie_detail.jpg?raw=true" height="500">&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/5_1_tv_home_page.jpg?raw=true" height="500"></p>
+
+<p align="center"><img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/5_2_tv_detail_page.jpg?raw=true" height="500"></img>&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/5_2_tv_season_detail.jpg?raw=true" height="500">&nbsp; &nbsp;<img src="https://github.com/kroniz-utab/flutter_expert_dicoding/blob/main/submission/apps_screenshot/6_watchlist_page.jpg?raw=true" height="500"></p>
