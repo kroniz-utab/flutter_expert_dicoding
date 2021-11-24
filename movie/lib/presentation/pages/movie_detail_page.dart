@@ -141,15 +141,18 @@ class _DetailContentState extends State<DetailContent> {
                                       RemoveMovieFromWatchlist(widget.movie));
                                 }
 
-                                final message =
-                                    context.select<MovieWatchlistBloc, String>(
-                                  (value) =>
-                                      (value.state as MovieIsAddedToWatchlist)
-                                                  .isAdded ==
-                                              false
-                                          ? messageWatchlistAddSuccess
-                                          : messageWatchlistRemoveSuccess,
-                                );
+                                final message = context.select<
+                                    MovieWatchlistBloc,
+                                    String>((value) => (value.state
+                                        is MovieIsAddedToWatchlist)
+                                    ? (value.state as MovieIsAddedToWatchlist)
+                                                .isAdded ==
+                                            false
+                                        ? messageWatchlistAddSuccess
+                                        : messageWatchlistRemoveSuccess
+                                    : !widget.isAddedWatchlist
+                                        ? messageWatchlistAddSuccess
+                                        : messageWatchlistRemoveSuccess);
 
                                 if (message == messageWatchlistAddSuccess ||
                                     message == messageWatchlistRemoveSuccess) {
